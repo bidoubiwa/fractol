@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/09 16:02:48 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/09 20:24:18 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,6 @@ typedef struct		s_iter
 }					t_iter;
 
 int					mandelbrot(t_env *env);
+void				events_listener(t_env *env);
+unsigned int		hsv_calculator(int iter);
 #endif

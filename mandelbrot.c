@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/09 17:53:51 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/09 20:15:11 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,14 @@ int		iter_mandel(t_iter *iter, int nbr_iter, t_env *env, int pixel)
 		//dire = iter->x * iter->x + (2 * iter->x * iter->y) - iter->y * iter->y + iter->o_x + iter->o_y;
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
-		iter->y = (x_tmp * iter->y) + (x_tmp * iter->y) + iter->o_y; 
+		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
 		//x_dim = fdim((double)lim->max_w, (double)lim->min_w);
 //		printf("dire : %f ", dire);
 		if (iter->x >= -2 && iter->x <= 2 && iter->y <= 2 && iter->y >= -2)
 		{
 //			printf("pos : %d x : %f y : %f ",pixel, x_tmp, iter->y);
 //			printf("new x : %f new y : %f \n", iter->x, iter->y);
-			if (nbr_iter == 3)
-				env->data_addr[pixel]  = mlx_get_color_value(env->mlx, 0x00FFFFFF);
-			else if  (nbr_iter == 2)
-				env->data_addr[pixel]  = mlx_get_color_value(env->mlx, 0x00FF0000);
-			else 
-				env->data_addr[pixel]  = mlx_get_color_value(env->mlx, 0x0000FF00);
+			env->data_addr[pixel]  = mlx_get_color_value(env->mlx, hsv_calculator(nbr_iter));
 	}
 		return (iter_mandel(iter, nbr_iter - 1 , env, pixel));
 	}
