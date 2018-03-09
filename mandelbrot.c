@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/09 20:15:11 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/09 22:29:57 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,21 @@ int		iter_mandel(t_iter *iter, int nbr_iter, t_env *env, int pixel)
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
 		//x_dim = fdim((double)lim->max_w, (double)lim->min_w);
 //		printf("dire : %f ", dire);
-		if (iter->x >= -2 && iter->x <= 2 && iter->y <= 2 && iter->y >= -2)
+		if ((iter->x * iter->x) + (iter->y * iter->y) <= 4)
 		{
 //			printf("pos : %d x : %f y : %f ",pixel, x_tmp, iter->y);
 //			printf("new x : %f new y : %f \n", iter->x, iter->y);
 			env->data_addr[pixel]  = mlx_get_color_value(env->mlx, hsv_calculator(nbr_iter));
-	}
+		}
+		//iter->o_x = iter->x;
+		//iter->o_y = iter->y;
 		return (iter_mandel(iter, nbr_iter - 1 , env, pixel));
 	}
 
 }
 
 
-int		mandelbrot(t_env *env)
+int		mandelbrot(t_env *env, double start_x, double start_y)
 {
 	t_lim	lim;
 	int		x;
@@ -88,11 +90,13 @@ int		mandelbrot(t_env *env)
 	while (y < HEIGHT_SCREEN)
 	{
 		x = 0;
-		real_y = y_plane_coord(y, &lim);
+		//real_y = y_plane_coord(y, &lim);
+		real_y = (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN) + start_y;
 	//	printf("i : %f\n", real_y);
 		while (x < WIDTH_SCREEN)
 		{
-			real_x = x_plane_coord(x, &lim);
+			//real_x = x_plane_coord(x, &lim);
+			real_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom * WIDTH_SCREEN) + start_x ;
 		//	printf("x : %f\n", real_x);
 			iter.o_x = real_x;
 			iter.o_y = real_y;
