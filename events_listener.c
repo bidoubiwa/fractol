@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/09 22:34:33 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/10 18:57:02 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,60 +24,62 @@ void		clear_image(t_env *env)
 			env->data_addr[i] = 0;
 		i++;
 	}
-	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+//	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
-/*int			key_hook(int keycode, t_env *env)
+int			key_hook(int keycode, t_env *env)
 {
-	if (keycode == 83 || keycode == 84 || keycode == 86 ||
-			keycode == 88 || keycode == 91 || keycode == 92)
-		rotation(env, keycode);
-	if (keycode == 78 || keycode == 69)
-		zoom(env, keycode);
-	if (keycode >= 123 && keycode <= 126)
-		movement(env, keycode);
-	if (keycode == 49)
-		reset(env);
+	if (keycode == 123)
+	{
+		env->iter->o_x = env->iter->o_x - 0.1;
+		clear_image(env);
+		julia(env, env->iter);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	}
+	if (keycode == 124)
+	{
+		env->iter->o_x = env->iter->o_x + 0.1;
+		printf("x iter : %f\n", env->iter->o_x);
+		clear_image(env);
+		julia(env, env->iter);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	}
 	if (keycode == 53)
 	{
 		mlx_destroy_image(env->mlx, env->img);
 		mlx_destroy_window(env->mlx, env->win);
-		free_all(env, env->matrix);
 		exit(EXIT_FAILURE);
 	}
 	return (0);
-}*/
+}
 
 int			mouse_hook(int z, int x, int y, t_env *env)
 {
-	t_lim	lim;
-	double	mouse_y;
-	double	mouse_x;
 	double	start_y;
 	double	start_x;
-
+	double old_zoom;
 	//(void)env;
-	printf("et si\n");
 	(void)z;
-	init_plane(env, &lim);
-	//real_y = y_plane_coord(y, &lim);
-	//real_x = x_plane_coord(x, &lim);
-	start_y = (y - HEIGHT_SCREEN / 2.0) / (0.5 * 1.25 * HEIGHT_SCREEN);
-	start_x =  1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * 1.25 * WIDTH_SCREEN);
-	mouse_y = (y - HEIGHT_SCREEN / 2.0) / (0.5 * 1.25 * HEIGHT_SCREEN) + start_y;
-	mouse_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * 1.25 *WIDTH_SCREEN) + start_x;
-	mlx_string_put(env->mlx, env->win, 50, 50, 0x00ffffff, ft_itoa(x));
-	mlx_string_put(env->mlx, env->win, 50, 100, 0x00ffffff, ft_itoa(y));
-	env->zoom = env->zoom + 0.5;	
-//	printf("x : %d y : %d \n", x, y);
-//	printf("real_x : %f real_y : %f \n", real_x, real_y);
+	//printf("Zoom avt : %f zoom apres : %f \n", env->zoom, env->zoom + 0.5);	
+	//printf("x : %d y: %d\n",x, y);
+	//env->start_y = (y - HEIGHT_SCREEN / 2.0) / (0.5  * HEIGHT_SCREEN);
+	old_zoom = env->zoom;
+	start_x =  1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom  * WIDTH_SCREEN);
+	start_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));	
+	//printf("r bef : %f i bef: %f\n",start_x,start_y);
+	env->zoom = env->zoom + 0.1;	
+//	env->start_x =  ((1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * 0.1  * WIDTH_SCREEN))) / env->zoom;
+//	env->start_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * 0.1 * HEIGHT_SCREEN));
+	//printf("r : %f i: %f\n",env->start_x,env->start_y);
+//	printf("%8s | %8s | %8s\n", "zoom", "r", "i");
+//	printf("------------------------------------------------------------------\n");
+//	if (old_zoom == 0.5)
+	printf("%8f | %8f | %8f\n", old_zoom, start_x, start_y);
+	printf("%8f | %8f | %8f\n", env->zoom, env->start_x, env->start_y);
 
-//	x_tmp = real_x;
-//	real_x = (x_tmp * x_tmp) - (real_y * real_y) + x_tmp;
-//	real_y = 2 * (x_tmp * real_y) + real_y; 
-//	printf("real_x : %f real_y : %f \n", real_x, real_y);
+	//env->start_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom *WIDTH_SCREEN) + start_x;
 	clear_image(env);
-	mandelbrot(env, mouse_x, mouse_y);
+	mandelbrot(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 
 	return (0);
@@ -85,6 +87,6 @@ int			mouse_hook(int z, int x, int y, t_env *env)
 
 void		events_listener(t_env *env)
 {
-	//mlx_key_hook(env->win, key_hook, env);
+	mlx_key_hook(env->win, key_hook, env);
 	mlx_mouse_hook(env->win, mouse_hook, env);
 }

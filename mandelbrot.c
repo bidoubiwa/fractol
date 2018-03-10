@@ -6,110 +6,72 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/09 22:29:57 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/10 18:54:08 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_plane(t_env *env, t_lim *lim)
+/*int		iter_mandel(t_iter *iter, int nbr_iter, t_env *env, int pixel)
+  {
+//double x_tmp;
+int			i;
+
+i = 0;
+while (i <= nbr_iter)
 {
-	(void) env;
-	lim->min_w = -3;
-	lim->max_w = 3;
-	lim->max_h = 2;
-	lim->min_h = -2;
+//	x_tmp = iter->x;
+//	iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
+//	iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
+//	if ((iter->x * iter->x) + (iter->y * iter->y) <= 4)
+//	{
+env->data_addr[pixel] = 0xFFFFFF;
+//	}
+//	return (iter_mandel(iter, nbr_iter - 1 , env, pixel));
+i++;
 }
+return (0);
+}*/
 
-double	y_plane_coord(int y, t_lim *lim)
+
+int		mandelbrot(t_env *env)
 {
-	double		h_scale;
-	double		i_scale;
-	double		dim;
-
-	h_scale = 1 - ((double)y / (double)HEIGHT_SCREEN);
-	dim = fdim((double)lim->max_h, (double)lim->min_h);
-	//printf("dim : %f  ", dim);
-	i_scale = (dim * h_scale) - dim / 2;
-	return (i_scale);
-}
-
-double	x_plane_coord(int x, t_lim *lim)
-{
-	double		w_scale;
-	double		x_scale;
-	double		dim;
-
-	w_scale = ((double)x / (double)WIDTH_SCREEN);
-	dim = fdim((double)lim->max_w, (double)lim->min_w);
-//	printf("dim : %f  ", dim);
-	x_scale = (dim * w_scale) - dim / 2;
-	return (x_scale);
-}
-
-int		iter_mandel(t_iter *iter, int nbr_iter, t_env *env, int pixel)
-{
-	double x_tmp;
-
-	if (nbr_iter == 0)
-		return (0);
-	else
-	{
-		//dire = iter->x * iter->x + (2 * iter->x * iter->y) - iter->y * iter->y + iter->o_x + iter->o_y;
-		x_tmp = iter->x;
-		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
-		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
-		//x_dim = fdim((double)lim->max_w, (double)lim->min_w);
-//		printf("dire : %f ", dire);
-		if ((iter->x * iter->x) + (iter->y * iter->y) <= 4)
-		{
-//			printf("pos : %d x : %f y : %f ",pixel, x_tmp, iter->y);
-//			printf("new x : %f new y : %f \n", iter->x, iter->y);
-			env->data_addr[pixel]  = mlx_get_color_value(env->mlx, hsv_calculator(nbr_iter));
-		}
-		//iter->o_x = iter->x;
-		//iter->o_y = iter->y;
-		return (iter_mandel(iter, nbr_iter - 1 , env, pixel));
-	}
-
-}
-
-
-int		mandelbrot(t_env *env, double start_x, double start_y)
-{
-	t_lim	lim;
 	int		x;
 	int		y;
+	int		i;
 	t_iter	iter;
 	double	real_y;
 	double	real_x;
+	double x_tmp;
+	double y_tmp;
 
-	init_plane(env, &lim);
 	y = 0;
 	real_y = 0;
 	while (y < HEIGHT_SCREEN)
 	{
 		x = 0;
-		//real_y = y_plane_coord(y, &lim);
-		real_y = (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN) + start_y;
-	//	printf("i : %f\n", real_y);
+		real_y = 0 - ((y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN) + env->start_y);
 		while (x < WIDTH_SCREEN)
 		{
-			//real_x = x_plane_coord(x, &lim);
-			real_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom * WIDTH_SCREEN) + start_x ;
-		//	printf("x : %f\n", real_x);
-			iter.o_x = real_x;
-			iter.o_y = real_y;
-			iter.x = real_x;
-			iter.y = real_y;
-			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
+				real_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom * WIDTH_SCREEN) + env->start_x;
+				iter.x = real_x;
+				iter.y = real_y;
+			if (real_x >= -2 && real_x <= 2 && real_y <= 2 && real_y >= -2)
 			{
-			//	printf("x : %d y : %d x : %f y : %f \n", x, y, iter.x, iter.y);
-				iter_mandel(&iter, env->iter, env, (y * WIDTH_SCREEN) + x);
+				i = 0;
+				while (((iter.x * iter.x) + (iter.y * iter.y)) < 4 &&  i <= env->iteration)
+				{
+					x_tmp = iter.x;
+					y_tmp = iter.y;
+					iter.x = (x_tmp * x_tmp) - (y_tmp * y_tmp) + real_x;
+					iter.y = 2 * (x_tmp * y_tmp) + real_y;
+					env->data_addr[(y * WIDTH_SCREEN) + x] = palette(i);
+					i++;
+				}
 			}
 			x++;
-		}	
+		}
 		y++;
-	}
+	}	
 	return (1);
 }
