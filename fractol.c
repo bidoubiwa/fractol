@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/10 18:56:11 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/10 19:15:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	init_mlx(t_env *env, t_iter *iter)
 {
 	//env->start_x = -0.25;
-	env->start_x = 0;
-	env->start_y = 0;
-	env->zoom = 2;
+	env->start_x = 0.00;
+	env->start_y = 0.00;
+	env->zoom = 0.5;
 	env->iteration = 36;
 	env->iter = iter;
 	env->mlx = mlx_init();
