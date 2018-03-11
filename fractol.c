@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/10 19:15:06 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/11 17:53:26 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_mlx(t_env *env, t_iter *iter)
 {
 	//env->start_x = -0.25;
+	env->color_size = 200;
 	env->start_x = 0.00;
 	env->start_y = 0.00;
 	env->zoom = 0.5;
@@ -34,8 +35,9 @@ int		main()
 	init_mlx(&env, &iter);
 	iter.o_x = 0.4;
 	iter.o_y = 0.6;
-	mandelbrot(&env);
-//	julia(&env, &iter);
+//	mandelbrot(&env);
+	julia(&env, &iter);
+	draw_circle(&env);
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	events_listener(&env);
 	mlx_loop(env.mlx);

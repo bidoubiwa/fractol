@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/10 15:38:55 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/11 17:15:19 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		iter_julia(t_iter *iter, int nbr_iter, t_env *env, int pixel)
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
 		if ((iter->x * iter->x) + (iter->y * iter->y) <= 4)
 		{
-			env->data_addr[pixel]  = mlx_get_color_value(env->mlx, hsv_calculator(nbr_iter));
+			env->data_addr[pixel]  = palette(i);
 		}
 	//	return (iter_julia(iter, nbr_iter - 1 , env, pixel));
 		i++;

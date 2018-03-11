@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/10 16:32:01 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/11 18:31:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@ typedef struct		s_env
 	double			start_x;
 	double			start_y;
 	t_iter			*iter;
+
+	int				color;
+	int				color_size;
 }					t_env;
 
 
 int					mandelbrot(t_env *env);
 int					julia(t_env *env, t_iter *iter);
 void				events_listener(t_env *env);
-unsigned int		hsv_calculator(int iter);
+unsigned int		hsv_calculator(int hue, double saturation);
 unsigned int		palette(int	iter);
+void				draw_circle(t_env *env);
 #endif

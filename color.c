@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 17:52:30 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/10 16:37:03 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/11 18:11:48 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,15 @@ unsigned int	palette(int iter)
 
 
 
-unsigned int hsv_calculator(int iter)
+unsigned int hsv_calculator(int hue, double saturation)
 {
-	int		hue;
-	double	saturation;
 	double	bright;
 	double	chroma;
 	double	min;
 	double  x;
 
-	hue = iter * 6;
-	saturation = 0.79;
+	//hue = iter * 6;
+	//saturation = 0.79;
 	bright = 0.70;
 	chroma = bright * saturation;
 	min = bright - chroma;
