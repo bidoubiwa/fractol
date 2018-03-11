@@ -18,6 +18,7 @@
 # include <string.h>
 # include "../libft/includes/libft.h"
 # include "../minilibx_macos/mlx.h"
+# include "mlx_keys_macos.h"
 # define WIDTH_SCREEN 2560
 # define HEIGHT_SCREEN 1440
 
@@ -28,6 +29,12 @@ typedef struct		s_iter
 	double		x;
 	double		y;
 }					t_iter;
+
+typedef struct		s_order
+{
+	char		mandelbrot;
+	char		julia;
+}			t_order;
 
 typedef struct		s_env
 {
@@ -46,9 +53,8 @@ typedef struct		s_env
 	double			start_x;
 	double			start_y;
 	t_iter			*iter;
-
-	int				color;
-	int				color_size;
+	int			color;
+	int			color_size;
 }					t_env;
 
 

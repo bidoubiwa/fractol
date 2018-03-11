@@ -58,8 +58,10 @@ unsigned int hsv_calculator(int hue, double saturation)
 		return (rgb_to_hex((int)round((min) * 255),(int)round((chroma + min) * 255),(int)round((x + min) * 255)));
 	if (hue > 180 && hue <= 240)
 		return (rgb_to_hex((int)round(min * 255),(int)round((x + min) * 255),(int)round((chroma + min) * 255)));
+	if (hue > 240 && hue <= 300)
+		return (rgb_to_hex((int)round((x + min) * 255),(int)round(min * 255),(int)round((chroma + min) * 255)));
 	else
-		return (rgb_to_hex((int)round((x + min)* 255),(int)round((min) * 255),(int)round((chroma + min) * 255)));
+		return (rgb_to_hex((int)round((chroma + min)* 255),(int)round((min) * 255),(int)round((x + min) * 255)));
 	return (0);
 }
 

@@ -15,6 +15,7 @@
 void	init_mlx(t_env *env, t_iter *iter)
 {
 	//env->start_x = -0.25;
+	env->color = 0;
 	env->color_size = 200;
 	env->start_x = 0.00;
 	env->start_y = 0.00;
@@ -37,7 +38,6 @@ int		main()
 	iter.o_y = 0.6;
 //	mandelbrot(&env);
 	julia(&env, &iter);
-	draw_circle(&env);
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	events_listener(&env);
 	mlx_loop(env.mlx);
