@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/11 18:31:06 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/12 13:32:26 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ typedef struct		s_iter
 
 typedef struct		s_order
 {
-	char		mandelbrot;
-	char		julia;
-}			t_order;
+	int				order;
+	
+
+}					t_order;
 
 typedef struct		s_env
 {
@@ -59,6 +60,7 @@ typedef struct		s_env
 
 
 int					mandelbrot(t_env *env);
+int					buddhabrot(t_env *env);
 int					julia(t_env *env, t_iter *iter);
 void				events_listener(t_env *env);
 unsigned int		hsv_calculator(int hue, double saturation);

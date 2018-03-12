@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/11 17:47:26 by cvermand         ###   ########.fr        #
+#    Updated: 2018/03/12 13:32:39 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 CFLAGS		=   -Wall -Werror -Wextra -g3
 
 _SRCS		=	fractol.c mandelbrot.c color.c events_listener.c julia.c \
-				color_circle.c
+				color_circle.c buddhabrot.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 
