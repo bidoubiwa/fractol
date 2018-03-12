@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/12 13:47:47 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/12 17:56:37 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			mandelbrot_zoom(int x, int y, t_env *env)
 		env->start_y = env->start_y - fdim(fmax(af_y,start_y),fmin(af_y, start_y));
 	env->iteration = env->iteration + 5;
 	clear_image(env);
-	buddhabrot(env);
+	mandelbrot(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	return (0);
 }

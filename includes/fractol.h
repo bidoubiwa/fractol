@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/12 13:32:26 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/12 18:27:16 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+# include <pthread.h>
 # include "../libft/includes/libft.h"
 # include "../minilibx_macos/mlx.h"
 # include "mlx_keys_macos.h"
 # define WIDTH_SCREEN 2560
 # define HEIGHT_SCREEN 1440
+
 
 typedef struct		s_iter
 {
@@ -29,6 +31,13 @@ typedef struct		s_iter
 	double		x;
 	double		y;
 }					t_iter;
+
+typedef struct		s_path
+{
+	int				x;
+	int				y;
+	struct s_path	*next;
+}					t_path;
 
 typedef struct		s_order
 {
@@ -56,6 +65,11 @@ typedef struct		s_env
 	t_iter			*iter;
 	int			color;
 	int			color_size;
+	int				min_x;
+	int				max_x;
+	int				min_y;
+	int				max_y;
+
 }					t_env;
 
 
