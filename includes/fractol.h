@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/12 18:27:16 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/13 14:54:46 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ typedef struct		s_env
 	int				max_x;
 	int				min_y;
 	int				max_y;
-
+	char			loop;
 }					t_env;
 
 
 int					mandelbrot(t_env *env);
 int					buddhabrot(t_env *env);
+int					antibuddhabrot(t_env *env);
 int					julia(t_env *env, t_iter *iter);
 void				events_listener(t_env *env);
 unsigned int		hsv_calculator(int hue, double saturation);

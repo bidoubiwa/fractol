@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/12 17:56:37 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/13 15:08:00 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ int			key_hook(int keycode, t_env *env)
 		mlx_destroy_window(env->mlx, env->win);
 		exit(EXIT_FAILURE);
 	}
+	if (keycode == KEY_L)
+	{
+		if (env->loop)
+			env->loop = 0;
+		else
+			env->loop = 1;
+		printf("KEY L :  %d\n", env->loop);
+	}
+
 	if (keycode == KEY_C)
 		color_menu(env);
 	return (0);
@@ -82,7 +91,7 @@ int			mandelbrot_zoom(int x, int y, t_env *env)
 	old_zoom = env->zoom;
 	start_x =  1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom  * WIDTH_SCREEN);
 	start_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));	
-	env->zoom = env->zoom + 0.3;	
+	env->zoom = env->zoom * 1.1;	
 	af_x =  ((1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5  * env->zoom * WIDTH_SCREEN)));
 	af_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));
 	if (af_x >= 0)
@@ -93,11 +102,20 @@ int			mandelbrot_zoom(int x, int y, t_env *env)
 		env->start_y = env->start_y + fdim(fmax(af_y,start_y), fmin(af_y, start_y));
 	else
 		env->start_y = env->start_y - fdim(fmax(af_y,start_y),fmin(af_y, start_y));
-	env->iteration = env->iteration + 5;
+	env->iteration = env->iteration + 1;
 	clear_image(env);
 	mandelbrot(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	return (0);
+}
+
+int		loop_hook( int x, int y, t_env *env)
+{
+	if (env->loop)
+	{
+		printf("x : %d y: %d\n", x, y);
+	}
+	return (1);
 }
 
 int			mouse_hook(int z, int x, int y, t_env *env)
@@ -106,7 +124,7 @@ int			mouse_hook(int z, int x, int y, t_env *env)
 	//double	af_x;
 	unsigned int color;
 
-	(void)z;
+	printf("button : %d\n", z);
 	if (env->color && (x > WIDTH_SCREEN - env->color_size) && y < env->color_size)
 	{
 		color = env->data_addr[y * WIDTH_SCREEN + x];
@@ -120,6 +138,7 @@ int			mouse_hook(int z, int x, int y, t_env *env)
 
 void		events_listener(t_env *env)
 {
+//	mlx_loop_hook(env->win, loop_hook, env);
 	mlx_key_hook(env->win, key_hook, env);
 	mlx_mouse_hook(env->win, mouse_hook, env);
 }

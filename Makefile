@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/12 16:52:10 by cvermand         ###   ########.fr        #
+#    Updated: 2018/03/13 14:24:40 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 CFLAGS		=   -Wall -Werror -Wextra -g3
 
 _SRCS		=	fractol.c mandelbrot.c color.c events_listener.c julia.c \
-				color_circle.c buddhabrot.c
+				color_circle.c buddhabrot.c antibuddhabrot.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 
@@ -32,7 +32,7 @@ OBJS		=	$(SRCS:.c=.o)
 all:	$(FRACTOL)
 
 $(FRACTOL) : $(LIBFT) $(MLX) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(FRACTOL) $(OBJS) -framework OpenGL -framework AppKit -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lm -lpthread
+	@$(CC) $(CFLAGS) -o $(FRACTOL) $(OBJS) -framework OpenGL -framework AppKit -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lm -D_REENTRANT -lpthread
 	@echo "$(FRACTOL) : $(_GREEN)Done$(_END)"
 
 $(LIBFT):
