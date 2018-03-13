@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 15:08:00 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:36:51 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ int			key_hook(int keycode, t_env *env)
 {
 	if (keycode == 123)
 	{
-		env->iter->o_x = env->iter->o_x - 0.1;
+		env->iter->o_x = env->iter->o_x - 0.01;
 		clear_image(env);
-		julia(env, env->iter);
+		julia(env);
 		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	}
 	if (keycode == 124)
 	{
-		env->iter->o_x = env->iter->o_x + 0.1;
-		printf("x iter : %f\n", env->iter->o_x);
+		env->iter->o_x = env->iter->o_x + 0.01;
 		clear_image(env);
-		julia(env, env->iter);
+		julia(env);
 		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	}
 	if (keycode == KEY_ESCAPE)
@@ -79,7 +78,7 @@ int			key_hook(int keycode, t_env *env)
 	return (0);
 }
 
-int			mandelbrot_zoom(int x, int y, t_env *env)
+int			mandelbrot_zoom(int button, int x, int y, t_env *env)
 {
 	double	start_y;
 	double	af_y;
@@ -90,8 +89,11 @@ int			mandelbrot_zoom(int x, int y, t_env *env)
 
 	old_zoom = env->zoom;
 	start_x =  1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom  * WIDTH_SCREEN);
-	start_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));	
-	env->zoom = env->zoom * 1.1;	
+	start_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));
+	if (button == 2)
+		env->zoom = env->zoom / 1.1;
+	else
+		env->zoom = env->zoom * 1.1;	
 	af_x =  ((1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5  * env->zoom * WIDTH_SCREEN)));
 	af_y = 0 - ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN));
 	if (af_x >= 0)
@@ -131,7 +133,7 @@ int			mouse_hook(int z, int x, int y, t_env *env)
 		printf("color : %#x\n", color);	
 	}
 	else {
-		mandelbrot_zoom(x, y, env);
+		mandelbrot_zoom(z, x, y, env);
 	}
 	return (0);
 }
