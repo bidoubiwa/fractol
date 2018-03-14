@@ -6,57 +6,73 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 17:44:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 19:56:16 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/14 18:00:09 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_args(t_env **c_env, int nbr, t_env *env)
+t_screen	**create_tmp_screens(t_screen **screens)
+{
+	int		i;
+	
+	if (!(screens = ft_memalloc(sizeof(t_screen *) * 4)))
+		return (0);
+	i = 0;
+	while (i < 4)
+	{
+		if (!(screens[i] = malloc(sizeof(t_screen))))
+				return (0);
+		i++;
+	}
+	return (screens);
+}
+
+t_screen	**init_tmp_screens_info(t_screen **screens, t_env *env, int nbr_scr)
 {
 	int		i;
 
 	i = 0;
 	while (i < 4)
 	{
-		c_env[i]->screen = &env->screen[nbr];
-		c_env[i]->zoom = env->screen[nbr].fractal->zoom;
-		c_env[i]->iteration = env->screen[nbr].fractal->iteration;
-		c_env[i]->width = env->screen[nbr].width;
-		c_env[i]->height = env->screen[nbr].height;
+		screens[i]->fractal = env->screen[nbr_scr]->fractal;
+		screens[i]->width = env->screen[nbr_scr]->width;
+		screens[i]->height = env->screen[nbr_scr]->height;
+		screens[i]->data_addr = env->data_addr;
+		screens[i]->min_scr_x = env->screen[nbr_scr]->min_x;
+		screens[i]->min_scr_y = env->screen[nbr_scr]->min_y;	
+		screens[i]->ratio = env->screen[nbr_scr]->ratio;	
 		i++;
 	}
+	return (screens);
+}
 
-/*	c_env[1]->screen = &env->screen[nbr];
-	c_env[2]->screen = &env->screen[nbr];
-	c_env[3]->screen = &env->screen[nbr];*/
-	init_arg_limits(env->screen[nbr].min_x + env->screen[nbr].width / 2, env->screen[nbr].min_y , 
-			c_env[0], env);
-	init_arg_limits(env->screen[nbr].min_x , env->screen[nbr].min_y, c_env[1], env);
-	init_arg_limits(env->screen[nbr].min_x +  env->screen[nbr].width / 2,env->screen[nbr].min_y + env->screen[nbr].height / 2, c_env[2], env);
-	init_arg_limits(env->screen[nbr].min_x, env->screen[nbr].min_y + env->screen[nbr].height / 2, c_env[3], env);	
-
-
+t_screen	**init_args(t_screen **screens, int nbr_scr, t_env *env)
+{
+	int		i;
+	
+	if (!(screens = create_tmp_screens(screens)))
+		return (NULL);	
+	screens = init_tmp_screens_info(screens, env, nbr_scr);		
+	init_arg_limits(env->screen[nbr_scr]->min_x , 
+			env->screen[nbr_scr]->min_y, screens[0], env);
+	init_arg_limits(env->screen[nbr_scr]->min_x + env->screen[nbr_scr]->width / 2, 
+			env->screen[nbr_scr]->min_y , screens[1], env);
+	init_arg_limits(env->screen[nbr_scr]->min_x, 
+			env->screen[nbr_scr]->min_y + env->screen[nbr_scr]->height / 2, 
+			screens[2], env);	
+	init_arg_limits(env->screen[nbr_scr]->min_x + env->screen[nbr_scr]->width / 2, 
+			env->screen[nbr_scr]->min_y + env->screen[nbr_scr]->height / 2, 
+			screens[3], env);
+	return (screens);
 }
 
 
-void	init_arg_limits(int min_x, int min_y, t_env *arg, t_env *env)
+void	init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env)
 {
-	arg->iter = env->iter;
-	arg->min_x = min_x;
-	arg->min_y = min_y;
-	arg->data_addr = env->data_addr;
-	arg->zoom = env->zoom;
-	arg->start_x = env->start_x;
-	arg->start_y = env->start_y;
-	arg->iteration = env->iteration;
-	if (min_x == 0)
-		arg->max_x = WIDTH_SCREEN / 2;
-	else if (min_x != 0)
-		arg->max_x = WIDTH_SCREEN;
-	if (min_y == 0)
-		arg->max_y = HEIGHT_SCREEN / 2;
-	else if (min_y != 0)
-		arg->max_y = HEIGHT_SCREEN;
+	screen->min_x = min_x;
+	screen->max_x = screen->min_x + screen->width / 2;
+	screen->min_y = min_y;
+	screen->max_y = screen->min_y + screen->height / 2;
 }
 

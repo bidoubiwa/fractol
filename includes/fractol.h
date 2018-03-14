@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 19:26:20 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/14 18:48:48 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct		s_env
 	int				height;
 	int				width;
 	char			loop;
-	struct s_screen	*screen;
+	struct s_screen	**screen;
 }					t_env;
 
 typedef struct			s_fractal
@@ -75,35 +75,53 @@ typedef struct			s_fractal
 	char			name;
 	int				(*f)(t_env*);
 	int				iteration;
+	double			start_x;
+	double			start_y;
+	double			const_x;
+	double			const_y;
 	double			zoom;
+	t_iter			*iter;
 }						t_fractal;
 
 typedef	struct			s_screen
 {
+	double				ratio;
 	int					order;
 	t_fractal			*fractal;
+	int					min_scr_x;
+	int					min_scr_y;
 	int					min_x;
 	int					max_x;
 	int					min_y;
 	int					max_y;
 	int					width;
 	int					height;
+	unsigned int		*data_addr;
 }						t_screen;
 
 int					mandelbrot(t_env *env);
 int					buddhabrot(t_env *env);
 int					antibuddhabrot(t_env *env);
 int					julia(t_env *env);
+void				init_mandelbrot(t_fractal *fractal);
+void				init_buddhabrot(t_fractal *fractal);
+void				init_antibuddhabrot(t_fractal *fractal);
+void				init_julia(t_fractal *fractal);
+t_screen			**init_screens(t_screen **screen);
+void				free_fractal(t_screen **screens);
+void				free_screens(t_screen **screens);
 void				events_listener(t_env *env);
 unsigned int		hsv_calculator(int hue, double saturation);
 unsigned int		palette(int	iter);
 void				draw_circle(t_env *env);
+double				get_screen_ratio(double width, double height);
 int					get_x_min(int order);
 int					get_x_max(int order);
 int					get_y_min(int order);
 int					get_y_max(int order);
 t_fractal			*get_fractal(int order);
 int					get_screen_by_fractal_name(t_env *env, char c);
-void				init_args(t_env **c_env, int nbr, t_env *env);
-void				init_arg_limits(int min_x, int min_y, t_env *arg, t_env *env);
+t_screen			*get_screen_ptr_by_fractal_name(t_env *env, char c);
+t_screen			**init_args(t_screen **screens, int nbr_screen, t_env *env);
+void				init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env);
 #endif

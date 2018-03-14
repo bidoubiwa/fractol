@@ -6,14 +6,14 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 19:36:27 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/14 18:19:53 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 
-void	mandelbrot_iter(t_env *env, t_iter *iter, int x, int y)
+void	mandelbrot_iter(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 {
 	int		i;
 	double	input_y;
@@ -24,13 +24,14 @@ void	mandelbrot_iter(t_env *env, t_iter *iter, int x, int y)
 	input_x = iter->x;
 	input_y = iter->y;
 	i = 0;
-	while (((iter->x * iter->x) + (iter->y * iter->y)) < 4 && i <= env->iteration)
+	while (((iter->x * iter->x) + (iter->y * iter->y)) < 4 && i <= nbr_iter)
 	{
+		if (i > 0)
+			scr->data_addr[pixel] = palette(i);
 		x_tmp = iter->x;
 		y_tmp = iter->y;
 		iter->x = (x_tmp * x_tmp) - (y_tmp * y_tmp) + input_x;
 		iter->y = 2 * (x_tmp * y_tmp) + input_y;
-		env->data_addr[(y * WIDTH_SCREEN) + x] = palette(i);
 		i++;
 	}
 }
@@ -48,27 +49,26 @@ void	*thread_mandelbrot(void *arg)
 {
 	int			x;
 	int			y;
-	double		input_y;
-	//double		input_x;
+	double		real_y;
 	t_iter		iter;
-	t_env		*env;
+	t_screen	*scr;
 
-	env = arg;
-	y = env->min_y;
-	while (y < env->max_y)
+	scr = arg;
+	y = scr->min_y;
+	while (y < scr->max_y)
 	{
-		x =  env->min_x;
-		input_y  = (0 - (y - env->screen->min_y) - env->screen->height / 2.0) / (0.5 * env->zoom * env->screen->height) + env->start_y;
-		while (x < env->max_x)
+		x =  scr->min_x;
+		real_y  = 0 - (((y - scr->min_scr_y) - scr->height / 2.0) / 
+			(0.5 * scr->fractal->zoom * scr->height)) + scr->fractal->start_y;
+		while (x < scr->max_x)
 		{
-			iter.x = 1.5 * ((x - env->screen->min_x) - env->screen->width / 2.0) / (0.5 * env->zoom * env->screen->width) + env->start_x ;
-			iter.y = input_y;
+			iter.y = real_y;
+			iter.x = scr->ratio * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
 			if (is_in_safe_range(iter.x, iter.y))
-				env->data_addr[(y * WIDTH_SCREEN) + x] = palette(1);
-			else if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
+				scr->data_addr[(y * WIDTH_SCREEN) + x] = palette(1);
+			else if (((iter.x * iter.x) + (iter.y * iter.y)) < 4)
 			{
-//				printf("je boucle \n");
-				mandelbrot_iter(env, &iter, x, y);
+				mandelbrot_iter(&iter, scr->fractal->iteration, scr, (y * WIDTH_SCREEN) + x);
 			}
 			x++;
 		}
@@ -80,28 +80,17 @@ void	*thread_mandelbrot(void *arg)
 int		mandelbrot(t_env *env)
 {
 	pthread_t	thread[4];
-	t_env		**c_env;
+	t_screen	**screens;
 	int			i;
-	int			screen;
+	int			nbr_screen;
 
-	
-	c_env = NULL;
-	i = 0;
-	if (!(c_env = malloc(sizeof(t_env*))))
-		return (0);
-	while (i < 4)
-	{
-		printf("TEST\n");
-		if (!(c_env[i] = malloc(sizeof(t_env))))
-				return (0);
-		i++;
-	}
-	screen = get_screen_by_fractal_name(env, 'j');
-	init_args(c_env, screen, env);
+	nbr_screen = get_screen_by_fractal_name(env, 'm');
+	if (!(screens = init_args(screens, nbr_screen, env)))
+		return (0);	
 	i = 0;
 	while (i < 4)
 	{
-		if	(pthread_create(&thread[i], NULL, &thread_mandelbrot, (void *)&c_env[i]) == -1) 
+		if	(pthread_create(&thread[i], NULL, &thread_mandelbrot, (void *)screens[i]) == -1)
 		{
 			perror("pthread_create");
 			return EXIT_FAILURE;
@@ -111,8 +100,9 @@ int		mandelbrot(t_env *env)
 	i = 0;
 	while (i < 4)
 	{
-		pthread_join (thread[i], NULL);
+		pthread_join(thread[i], NULL);
 		i++;
 	}
-	return (0);
+	free_screens(screens);
+	return (1);
 }

@@ -6,11 +6,27 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 15:35:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 17:43:13 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/14 18:49:49 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+t_screen		*get_screen_ptr_by_fractal_name(t_env *env, char c)
+{
+	int			i;
+
+	i = 0;
+	while (i < 4)
+	{
+		dprintf(1,"i : %d name : %c\n", i , env->screen[i]->fractal->name);
+		if (env->screen[i]->fractal->name == c)
+			return (env->screen[i]);
+		i++;
+	}
+	return (env->screen[0]);
+}
+
 
 int			get_screen_by_fractal_name(t_env *env, char c)
 {
@@ -19,12 +35,27 @@ int			get_screen_by_fractal_name(t_env *env, char c)
 	i = 0;
 	while (i < 4)
 	{
-		dprintf(1,"i : %d name : %c\n", i , env->screen[i].fractal->name);
-		if (env->screen[i].fractal->name == c)
+		dprintf(1,"i : %d name : %c\n", i , env->screen[i]->fractal->name);
+		if (env->screen[i]->fractal->name == c)
 			return (i);
 		i++;
 	}
 	return (i);
+}
+
+void		free_fractal(t_screen	**screens)
+{
+	int			i;
+	t_fractal	*fractal;
+
+	i = 0;
+	while (i < 4)
+	{
+		fractal = screens[i]->fractal;
+		free(fractal);
+		screens[i]->fractal = NULL;
+		i++;
+	}
 }
 
 t_fractal		*get_fractal(int order)
@@ -33,27 +64,15 @@ t_fractal		*get_fractal(int order)
 
 	if (!(fractal = ft_memalloc(sizeof(t_fractal))))
 		return (NULL);
-	if (order == 1 || order == 2)
-	{
-		fractal->f = (order == 1) ? &mandelbrot : &julia;
-		fractal->iteration = (order == 1) ? 15 : 35;
-		fractal->name = (order == 1) ? 'm' : 'j';
-		fractal->iteration = 15;
-		fractal->zoom = 0.5;
-	}
+	fractal->start_x = 0;
+	fractal->start_y = 0;	
+	if (order == 1)
+		init_mandelbrot(fractal);
+	else if (order == 2)
+		init_julia(fractal);
 	else if (order == 3)
-	{
-		fractal->f = &antibuddhabrot;
-		fractal->name = 'a';
-		fractal->iteration = 100;
-		fractal->zoom = 0.5;
-	}
+		init_antibuddhabrot(fractal);
 	else if (order == 4)
-	{
-		fractal->name = 'b';
-		fractal->f = &buddhabrot;
-		fractal->iteration = 100;
-		fractal->zoom = 0.5;
-	}
+		init_buddhabrot(fractal);
 	return (fractal);
 }
