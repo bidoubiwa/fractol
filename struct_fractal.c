@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 15:35:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:28:28 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/15 14:48:52 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_screen		*get_screen_ptr_by_fractal_name(t_env *env, char c)
 	i = 0;
 	while (i < 4)
 	{
-		dprintf(1,"i : %d name : %c\n", i , env->screen[i]->fractal->name);
 		if (env->screen[i]->fractal->name == c)
 			return (env->screen[i]);
 		i++;
@@ -35,7 +34,6 @@ int			get_screen_by_fractal_name(t_env *env, char c)
 	i = 0;
 	while (i < 4)
 	{
-		dprintf(1,"i : %d name : %c\n", i , env->screen[i]->fractal->name);
 		if (env->screen[i]->fractal->name == c)
 			return (i);
 		i++;

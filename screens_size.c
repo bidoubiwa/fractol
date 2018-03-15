@@ -6,18 +6,24 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 12:09:03 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/14 16:56:27 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:52:40 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double		get_screen_ratio(double width, double height)
+void	get_screen_ratio(double width, double height, t_screen *screen)
 {
 	if (width >= height)
-		return (width / height);
+	{
+		screen->ratio_x = width / height;
+		screen->ratio_y = 1;
+	}
 	else
-		return (height / width);
+	{
+		screen->ratio_x = 1;
+		screen->ratio_y = height / width;
+	}
 }
 
 int			get_x_min(int order)

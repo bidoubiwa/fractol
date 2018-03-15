@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:56:57 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:15:35 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,10 @@ typedef struct		s_env
 	int				win_width;
 	int				win_height;
 	int				iteration;
-	double			zoom;
-	double			start_x;
-	double			start_y;
-	t_iter			*iter;
 	int				color;
 	int				color_size;
-	int				min_x;
-	int				max_x;
-	int				min_y;
-	int				max_y;
-	int				height;
-	int				width;
 	char			loop;
+	char			show_menu;
 	struct s_screen	**screen;
 }					t_env;
 
@@ -80,12 +71,12 @@ typedef struct			s_fractal
 	double			const_x;
 	double			const_y;
 	double			zoom;
-	t_iter			*iter;
 }						t_fractal;
 
 typedef	struct			s_screen
 {
-	double				ratio;
+	double				ratio_x;
+	double				ratio_y;
 	int					order;
 	t_fractal			*fractal;
 	int					min_scr_x;
@@ -114,7 +105,7 @@ void				events_listener(t_env *env);
 unsigned int		hsv_calculator(int hue, double saturation);
 unsigned int		palette(int	iter);
 void				draw_circle(t_env *env);
-double				get_screen_ratio(double width, double height);
+void				get_screen_ratio(double width, double height, t_screen *screen);
 int					get_x_min(int order);
 int					get_x_max(int order);
 int					get_y_min(int order);
@@ -130,4 +121,5 @@ int					mouse_hook(int button, int x, int y, t_env *env);
 int					zoom(int button, int x, int y, t_env *env);
 void				clear_image(t_env *env);
 void				color_menu(t_env *env);
+void				display_fractals(t_env *env)
 #endif

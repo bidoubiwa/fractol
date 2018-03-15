@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:08:31 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/15 14:56:37 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	*thread_julia(void	*arg)
 	while (y < scr->max_y)
 	{
 		x = scr->min_x;
-		real_y  = 0 - (((y - scr->min_scr_y) - scr->height / 2.0) / 
-			(0.5 * scr->fractal->zoom * scr->height)) + scr->fractal->start_y;
+		real_y  = 0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) / 
+			(0.5 * scr->fractal->zoom * scr->height))) + scr->fractal->start_y;
 		while (x < scr->max_x)
 		{
 			iter.y = real_y;
-			iter.x = scr->ratio * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
+			iter.x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
 			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
 				iter_julia(&iter, scr->fractal->iteration, scr, ((y * WIDTH_SCREEN) + x));
 			x++;
