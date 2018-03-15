@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:52:04 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 15:23:49 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 15:27:15 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			zoom(int button, int x, int y, t_env *env)
 	double old_zoom;
 
 	scr = get_screen_ptr_by_fractal_name(env, 'm');
-
+	printf("CHARLOTTE");
 	// VERIFIER SI PT DANS FENETRE DU CENTRE
 	old_zoom = scr->fractal->zoom;
 	start_y = 0 - (scr->ratio_y * ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * scr->fractal->zoom * HEIGHT_SCREEN)));
