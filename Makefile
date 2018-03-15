@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/14 17:15:07 by cvermand         ###   ########.fr        #
+#    Updated: 2018/03/15 13:57:44 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,10 @@ CC			=	gcc
 CFLAGS		=   -g3 
 
 _SRCS		=	fractol.c mandelbrot.c color.c events_listener.c julia.c \
-				color_circle.c buddhabrot.c antibuddhabrot.c \
+				color_menu.c buddhabrot.c antibuddhabrot.c \
 				struct_fractal.c screens_size.c thread_handling.c \
-				init_fractals.c init_screens.c
+				init_fractals.c init_screens.c keys.c mouse.c \
+				loop.c zoom.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/14 18:48:48 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:56:57 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,10 @@ int					get_screen_by_fractal_name(t_env *env, char c);
 t_screen			*get_screen_ptr_by_fractal_name(t_env *env, char c);
 t_screen			**init_args(t_screen **screens, int nbr_screen, t_env *env);
 void				init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env);
+int					key_hook(int keycode, t_env *env);
+int					loop_hook(int x, int y, t_env *env);
+int					mouse_hook(int button, int x, int y, t_env *env);
+int					zoom(int button, int x, int y, t_env *env);
+void				clear_image(t_env *env);
+void				color_menu(t_env *env);
 #endif

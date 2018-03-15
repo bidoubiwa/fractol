@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 17:52:30 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/11 18:11:48 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:57:19 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ unsigned int rgb_to_hex(int r, int g, int b)
 	hex = (r << 16) + (g << 8) + b;
 	return (hex);
 }
-
 
 unsigned int	palette(int iter)
 {
@@ -34,8 +33,6 @@ unsigned int	palette(int iter)
 	else
 		return (0x5688C7);
 }
-
-
 
 unsigned int hsv_calculator(int hue, double saturation)
 {

@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_listener.c                                  :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:58:22 by cvermand         ###   ########.fr       */
+/*   Created: 2018/03/15 13:48:35 by cvermand          #+#    #+#             */
+/*   Updated: 2018/03/15 13:59:39 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-
-void		clear_image(t_env *env)
+int		loop_hook( int x, int y, t_env *env)
 {
-	int		i;
-
-	i = 0;
-	while (i < HEIGHT_SCREEN * WIDTH_SCREEN)
+	if (env->loop)
 	{
-		if (env->data_addr[i] != 0)
-			env->data_addr[i] = 0;
-		i++;
+		printf("x : %d y: %d\n", x, y);
 	}
+	return (1);
 }
 
-void		events_listener(t_env *env)
-{
-//	mlx_loop_hook(env->win, loop_hook, env);
-	mlx_key_hook(env->win, key_hook, env);
-	mlx_mouse_hook(env->win, mouse_hook, env);
-}

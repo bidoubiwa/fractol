@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_listener.c                                  :+:      :+:    :+:   */
+/*   mouse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:58:22 by cvermand         ###   ########.fr       */
+/*   Created: 2018/03/15 13:45:57 by cvermand          #+#    #+#             */
+/*   Updated: 2018/03/15 13:50:37 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "fractal.h"
 
-
-void		clear_image(t_env *env)
+int			mouse_hook(int button, int x, int y, t_env *env)
 {
-	int		i;
+	//double	af_y;
+	//double	af_x;
+	unsigned int color;
 
-	i = 0;
-	while (i < HEIGHT_SCREEN * WIDTH_SCREEN)
+	printf("button : %d\n", button);
+	if (env->color && (x > WIDTH_SCREEN - env->color_size) && y < env->color_size)
 	{
-		if (env->data_addr[i] != 0)
-			env->data_addr[i] = 0;
-		i++;
+		color = env->data_addr[y * WIDTH_SCREEN + x];
+		printf("color : %#x\n", color);	
 	}
+	else {
+		mandelbrot_zoom(button, x, y, env);
+	}
+	return (0);
 }
 
-void		events_listener(t_env *env)
-{
-//	mlx_loop_hook(env->win, loop_hook, env);
-	mlx_key_hook(env->win, key_hook, env);
-	mlx_mouse_hook(env->win, mouse_hook, env);
-}
+
