@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/14 18:18:58 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:07:26 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		main()
 	}
 	env.screen[0]->fractal->f(&env);
 	env.screen[1]->fractal->f(&env);
+	env.screen[2]->fractal->f(&env);
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	events_listener(&env);
 	mlx_loop(env.mlx);

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/14 18:20:04 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 13:08:31 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@ void	*thread_julia(void	*arg)
 	t_screen	*scr;
 
 	scr = arg;
-	printf("min_x : %d max_x : %d  min_y : %d max_y : %d\n  \
-height : %d width : %d zoom : %f\n \
-start_x : %f start_y : %f const_x : %f const_y : %f\n \
-itera : %d\n \
-----------------------------------------------------\n", 
-			scr->min_x, scr->max_x, scr->min_y, scr->max_y, 
-			scr->height, scr->width, scr->fractal->zoom,
-			scr->fractal->start_x, scr->fractal->start_y, 
-			scr->fractal->const_x, scr->fractal->const_y,
-			scr->fractal->iteration);
 	init_iter(&iter, scr);
 	y = scr->min_y;
 	while (y < scr->max_y)
