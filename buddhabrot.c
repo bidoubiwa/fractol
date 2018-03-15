@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/12 16:08:17 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 14:07:02 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_path	*add_chain(int x, int y, t_path *begin)
 {
 	t_path	*tmp;
-	
+
 	tmp = ft_memalloc(sizeof(t_path));
 	if (begin == NULL)
 		tmp->next = NULL;
@@ -32,84 +32,113 @@ void	free_path(t_path *begin)
 
 	while (begin)
 	{
-		//printf("x : %d\n", begin->x);
 		tmp = begin;
 		begin = begin->next;
 		free(tmp);
 	}
 }
 
-int		buddhabrot(t_env *env)
+int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 {
-	int		x;
-	int		y;
+	t_path	*path;
+	t_path	*tmp;
 	int		i;
-	t_iter	iter;
-	double	real_y;
-	double	real_x;
-	double	x_tmp;
-	double	y_tmp;
 	double	pixel_x;
 	double	pixel_y;
-	t_path	*tmp;
-	t_path	*path;
+	double	x_tmp;
 
-
-	y = 0;
-	real_y = 0;
-	while (y < HEIGHT_SCREEN)
+	path = NULL;
+	pixel_x = 0;
+	pixel_y = 0;
+	iter->o_x = iter->x;
+	iter->o_y = iter->y;
+	i = 0;
+	while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
-		x = 0;
-		real_y = (0 - (y - HEIGHT_SCREEN / 2.0) / (0.5 * env->zoom * HEIGHT_SCREEN)) + env->start_y;
-		while (x < WIDTH_SCREEN)
+		if ((int)round(pixel_y) >= 0 && (int)round(pixel_y) < HEIGHT_SCREEN && (int)round(pixel_x) >= 0 && (int)round(pixel_x) < WIDTH_SCREEN) 
+			path = add_chain((int)round(pixel_x), (int)round(pixel_y), path);
+		x_tmp = iter->x;
+		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
+		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
+		pixel_x = (((iter->x - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio) + (scr->width * 0.5) + scr->min_scr_x;
+		pixel_y = (scr->height * 0.5) - (iter->y - scr->fractal->start_y) * (0.5 * scr->fractal->zoom * scr->height) + scr->min_scr_y;
+		i++;
+	}
+	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && i != scr->fractal->iteration && i > 10)
+	{
+		tmp = path;
+		while (path)
 		{
-				real_x = 1.5 * (x - WIDTH_SCREEN / 2.0) / (0.5 * env->zoom * WIDTH_SCREEN) + env->start_x;
-				iter.x = real_x;
-				iter.y = real_y;
-			if (real_x >= -2 && real_x <= 2 && real_y <= 2 && real_y >= -2)
-			{
-				path = NULL;
-				i = 0;
-				while (((iter.x * iter.x) + (iter.y * iter.y)) < 4 &&  i <= env->iteration)
-				{
-					x_tmp = iter.x;
-					y_tmp = iter.y;
-					iter.x = (x_tmp * x_tmp) - (y_tmp * y_tmp) + real_x;
-					iter.y = 2 * (x_tmp * y_tmp) + real_y;
-				
-					pixel_x = (((iter.x - env->start_x) * (0.5 * WIDTH_SCREEN * env->zoom)) / 1.5) + (WIDTH_SCREEN * 0.5);
-					pixel_y = (HEIGHT_SCREEN * 0.5) - (iter.y - env->start_y) * (0.5 * env->zoom * HEIGHT_SCREEN);
-					if ((int)round(pixel_y) >= 0 && (int)round(pixel_y) < HEIGHT_SCREEN && (int)round(pixel_x) >= 0 && (int)round(pixel_x) < WIDTH_SCREEN) 
-					{
-						path = add_chain((int)round(pixel_x), (int)round(pixel_y), path);
-						
-					}	
-					//env->data_addr[(y * WIDTH_SCREEN) + x] = palette(i);
-					//					printf("pixel x : %d pixel y : %d")
-					i++;
-				}
-				if (((iter.x * iter.x) + (iter.y * iter.y)) > 4 && i != env->iteration && i > 10)
-				{
-					tmp = path;
-					while (path)
-					{
-						env->data_addr[(path->y * WIDTH_SCREEN) + path->x] = env->data_addr[(path->y * WIDTH_SCREEN) + path->x] +  0x080808;
-						path = path->next;
-					}
-					free_path(tmp);
-					path = NULL;
-					tmp = NULL;
-				}
-				else
-				{
-					free_path(path);
-					tmp = NULL;
-					path = NULL;
-				}
-			}
+			scr->data_addr[(path->y * WIDTH_SCREEN) + path->x] = scr->data_addr[(path->y * WIDTH_SCREEN) + path->x] + 0x161616;
+			path = path->next;
+		}
+		free_path(tmp);
+		path = NULL;
+		tmp = NULL;
+	}
+	else
+	{
+		free_path(path);
+		tmp = NULL;
+		path = NULL;
+	}
+	return (0);
+}
+
+void	*thread_buddha(void *arg)
+{
+	int			x;
+	int			y;
+	double		real_y;
+	t_iter		iter;
+	t_screen	*scr;
+
+	scr = arg;
+	y = scr->min_y;
+	while (y < scr->max_y)
+	{
+		x = scr->min_x;
+		real_y  = 0 - (((y - scr->min_scr_y) - scr->height / 2.0) / 
+				(0.5 * scr->fractal->zoom * scr->height)) + scr->fractal->start_y;
+		while (x < scr->max_x)
+		{
+			iter.y = real_y;
+			iter.x = scr->ratio * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
+			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
+				iter_buddha(&iter, scr->fractal->iteration, scr, ((y * WIDTH_SCREEN) + x));
 			x++;
 		}
 		y++;
-	}	
+	}
+	pthread_exit(NULL);
+}
+
+int		buddhabrot(t_env *env)
+{
+	pthread_t	thread[4];
+	t_screen	**screens;
+	int			i;
+	int			nbr_screen;
+
+	nbr_screen = get_screen_by_fractal_name(env, 'b');
+	if (!(screens = init_args(screens, nbr_screen, env)))
+		return (0);	
+	i = 0;
+	while (i < 4)
+	{
+		if	(pthread_create(&thread[i], NULL, &thread_buddha, (void *)screens[i]) == -1)
+		{
+			perror("pthread_create");
+			return EXIT_FAILURE;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < 4)
+	{
+		pthread_join(thread[i], NULL);
+		i++;
+	}
+	free_screens(screens);
 	return (1);
 }
