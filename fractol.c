@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 15:15:45 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:14:35 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	init_mlx(t_env *env, t_iter *iter)
 	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "titre");
 	env->img = mlx_new_image(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN);
 	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img, &env->bits_per_pixel, &env->bytes_per_line, &env->endian);
+}
+
+void		display_screen_one(t_env *env)
+{
+		env->screen[0]->fractal->f(env);
 }
 
 void		display_fractals(t_env *env)
@@ -49,7 +54,7 @@ int		main()
 	t_screen	**screens;
 	
 	init_mlx(&env, &iter);
-	if (!(env.screen = init_screens(screens)))
+	if (!(env.screen = init_screens(screens, env.show_menu)))
 		return (ft_printf("Initiation of screens went wrong"));
 	display_fractals(&env);
 	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);

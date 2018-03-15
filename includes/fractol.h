@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 15:15:35 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:11:31 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void				init_mandelbrot(t_fractal *fractal);
 void				init_buddhabrot(t_fractal *fractal);
 void				init_antibuddhabrot(t_fractal *fractal);
 void				init_julia(t_fractal *fractal);
-t_screen			**init_screens(t_screen **screen);
+t_screen			**init_screens(t_screen **screen, char menu_on);
 void				free_fractal(t_screen **screens);
 void				free_screens(t_screen **screens);
 void				events_listener(t_env *env);
@@ -107,7 +107,7 @@ unsigned int		palette(int	iter);
 void				draw_circle(t_env *env);
 void				get_screen_ratio(double width, double height, t_screen *screen);
 int					get_x_min(int order);
-int					get_x_max(int order);
+int					get_x_max(int order, char menu_on);
 int					get_y_min(int order);
 int					get_y_max(int order);
 t_fractal			*get_fractal(int order);
@@ -121,5 +121,5 @@ int					mouse_hook(int button, int x, int y, t_env *env);
 int					zoom(int button, int x, int y, t_env *env);
 void				clear_image(t_env *env);
 void				color_menu(t_env *env);
-void				display_fractals(t_env *env)
+void				display_fractals(t_env *env);
 #endif

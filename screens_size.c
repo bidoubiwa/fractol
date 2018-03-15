@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 12:09:03 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:52:40 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:09:43 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int			get_x_min(int order)
 		return (WIDTH_SCREEN - (WIDTH_SCREEN / 5));
 }
 
-int			get_x_max(int order)
+int			get_x_max(int order, char menu_on)
 {
-	(void) order;	
+	if (order == 1 && menu_on)
+		return (WIDTH_SCREEN - (WIDTH_SCREEN / 5));
 	return (WIDTH_SCREEN);
 }
 
