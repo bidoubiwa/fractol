@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:45:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:54:48 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/15 18:58:54 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,3 @@ int			mouse_hook(int button, int x, int y, t_env *env)
 	return (0);
 }
 
-/*
-
-	unsigned int color;
-
-	if (env->color && (x > WIDTH_SCREEN - env->color_size) && y < env->color_size)
-	{
-		color = env->data_addr[y * WIDTH_SCREEN + x];
-		printf("color : %#x\n", color);	
-	}
-	else {
-		zoom(button, x, y, env);
-	}
-
-*/

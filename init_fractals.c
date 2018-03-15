@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:40:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:43:05 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 22:14:09 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void	init_julia(t_fractal *fractal)
 	fractal->iteration = 35;
 	fractal->name = 'j';
 	fractal->zoom = 0.5;
-	fractal->const_x = 0.4;
+	fractal->const_x = 0.5;
 	fractal->const_y = 0.6;
 }
 
 void	init_mandelbrot(t_fractal *fractal)
 {
 	fractal->f =  &mandelbrot;
-	fractal->iteration = 35;
+	fractal->iteration = 36;
 	fractal->name = 'm';
 	fractal->zoom = 0.5;
 	fractal->const_x = 0;
@@ -36,7 +36,7 @@ void	init_antibuddhabrot(t_fractal *fractal)
 {
 	fractal->f = &antibuddhabrot;
 	fractal->name = 'a';
-	fractal->iteration = 100;
+	fractal->iteration = 1000;
 	fractal->zoom = 0.5;
 	fractal->const_x = 0;
 	fractal->const_y = 0;

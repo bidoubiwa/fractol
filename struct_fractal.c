@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 15:35:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:48:52 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 22:29:39 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_fractal		*get_fractal(int order)
 	else if (order == 2)
 		init_julia(fractal);
 	else if (order == 3)
-		init_antibuddhabrot(fractal);
-	else if (order == 4)
 		init_buddhabrot(fractal);
+	else if (order == 4)
+		init_antibuddhabrot(fractal);
 	return (fractal);
 }

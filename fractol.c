@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:52:29 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/15 22:02:19 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		main()
 	t_screen	**screens;
 	
 	init_mlx(&env, &iter);
+	printf("size : %lu\n",sizeof(t_path));
 	if (!(env.screen = init_screens(screens, env.show_menu)))
 		return (ft_printf("Initiation of screens went wrong"));
 	display_fractals(&env);

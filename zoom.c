@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:52:04 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:57:29 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/15 21:54:17 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int			zoom(int button, int x, int y, t_env *env)
 //	scr = get_screen_ptr_by_fractal_name(env, 'm');
 	scr = env->screen[0];
 	old_zoom = scr->fractal->zoom;
-	start_y = 0 - (scr->ratio_y * ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * scr->fractal->zoom * HEIGHT_SCREEN)));
-	start_x = scr->ratio_x * (x - WIDTH_SCREEN / 2.0) / (0.5 * scr->fractal->zoom  * WIDTH_SCREEN);
+	start_y = 0 - (scr->ratio_y * ( (y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
+	start_x = scr->ratio_x * (x - scr->width / 2.0) / (0.5 * scr->fractal->zoom  * scr->width);
 	if (button == 2)
 		scr->fractal->zoom = scr->fractal->zoom / 1.1;
 	else
 		scr->fractal->zoom = scr->fractal->zoom * 1.1;	
-	af_x =  ((scr->ratio_x * (x - WIDTH_SCREEN / 2.0) / (0.5  * scr->fractal->zoom * WIDTH_SCREEN)));
-	af_y = 0 - (scr->ratio_y * ((y - HEIGHT_SCREEN / 2.0) / (0.5 * scr->fractal->zoom * HEIGHT_SCREEN)));
+	af_x =  ((scr->ratio_x * (x - scr->width / 2.0) / (0.5  * scr->fractal->zoom * scr->width)));
+	af_y = 0 - (scr->ratio_y * ((y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
 	if (af_x >= 0)
 		scr->fractal->start_x = scr->fractal->start_x + fdim(fmax(af_x,start_x),fmin(af_x, start_x));
 	else
@@ -44,4 +44,3 @@ int			zoom(int button, int x, int y, t_env *env)
 	display_screen_one(env);
 	return (0);
 }
-
