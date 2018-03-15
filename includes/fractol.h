@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:11:31 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:57:56 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,6 @@ int					zoom(int button, int x, int y, t_env *env);
 void				clear_image(t_env *env);
 void				color_menu(t_env *env);
 void				display_fractals(t_env *env);
+void				display_screen_one(t_env *env);
+void				clear_and_redraw(t_env *env);
 #endif

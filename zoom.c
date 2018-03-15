@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:52:04 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 15:27:15 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:57:29 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ int			zoom(int button, int x, int y, t_env *env)
 	double	af_x;
 	double old_zoom;
 
-	scr = get_screen_ptr_by_fractal_name(env, 'm');
-	printf("CHARLOTTE");
-	// VERIFIER SI PT DANS FENETRE DU CENTRE
+//	scr = get_screen_ptr_by_fractal_name(env, 'm');
+	scr = env->screen[0];
 	old_zoom = scr->fractal->zoom;
 	start_y = 0 - (scr->ratio_y * ( (y - HEIGHT_SCREEN / 2.0) / (0.5 * scr->fractal->zoom * HEIGHT_SCREEN)));
 	start_x = scr->ratio_x * (x - WIDTH_SCREEN / 2.0) / (0.5 * scr->fractal->zoom  * WIDTH_SCREEN);
@@ -42,9 +41,7 @@ int			zoom(int button, int x, int y, t_env *env)
 	else
 		scr->fractal->start_y = scr->fractal->start_y - fdim(fmax(af_y,start_y),fmin(af_y, start_y));
 	scr->fractal->iteration = scr->fractal->iteration + 1;
-	clear_image(env);
-	mandelbrot(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	display_screen_one(env);
 	return (0);
 }
 

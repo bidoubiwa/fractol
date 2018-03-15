@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:14:35 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:52:29 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	init_mlx(t_env *env, t_iter *iter)
 
 void		display_screen_one(t_env *env)
 {
-		env->screen[0]->fractal->f(env);
+	env->screen[0]->fractal->f(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
 void		display_fractals(t_env *env)
@@ -45,6 +46,7 @@ void		display_fractals(t_env *env)
 	}
 	else
 		env->screen[0]->fractal->f(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
 int		main()
@@ -57,7 +59,6 @@ int		main()
 	if (!(env.screen = init_screens(screens, env.show_menu)))
 		return (ft_printf("Initiation of screens went wrong"));
 	display_fractals(&env);
-	mlx_put_image_to_window(env.mlx, env.win, env.img, 0, 0);
 	events_listener(&env);
 	mlx_loop(env.mlx);
 	free_fractal(screens);

@@ -6,11 +6,21 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:44:15 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 15:07:23 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/15 16:52:52 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void		set_menu(t_env *env)
+{
+	if (env->show_menu)
+		env->show_menu = 0;
+	else
+		env->show_menu = 1;
+	env->screen[0]->max_x = get_x_max(1, env->show_menu);
+	clear_and_redraw(env);
+}
 
 int			key_hook(int keycode, t_env *env)
 {
@@ -27,6 +37,8 @@ int			key_hook(int keycode, t_env *env)
 		else
 			env->loop = 1;
 	}
+	if (keycode == KEY_M)
+		set_menu(env);
 	if (keycode == KEY_C)
 		color_menu(env);
 	return (0);
