@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:52:04 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 11:38:15 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 13:52:38 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,34 @@ int			zoom(int button, int x, int y, t_env *env)
 	double	start_x;
 	double	af_x;
 
-	scr = env->screen[0];
-	start_y = 0 - (scr->ratio_y * ( (y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
-	start_x = scr->ratio_x * (x - scr->width / 2.0) / (0.5 * scr->fractal->zoom  * scr->width);
-	if (button == 2)
+	if (env->julia_loop == 0)
 	{
-		scr->fractal->zoom = scr->fractal->zoom / 1.1;
-		if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
-			scr->fractal->iteration = scr->fractal->iteration - 1;
+		scr = env->screen[0];
+		start_y = 0 - (scr->ratio_y * ( (y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
+		start_x = scr->ratio_x * (x - scr->width / 2.0) / (0.5 * scr->fractal->zoom  * scr->width);
+		if (button == 2)
+		{
+			scr->fractal->zoom = scr->fractal->zoom / 1.1;
+			if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
+				scr->fractal->iteration = scr->fractal->iteration - 1;
+		}
+		else if (button == 1)
+		{
+			scr->fractal->zoom = scr->fractal->zoom * 1.1;
+			if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
+				scr->fractal->iteration = scr->fractal->iteration + 1;
+		}
+		af_x =  ((scr->ratio_x * (x - scr->width / 2.0) / (0.5  * scr->fractal->zoom * scr->width)));
+		af_y = 0 - (scr->ratio_y * ((y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
+		if (af_x >= 0)
+			scr->fractal->start_x = scr->fractal->start_x + fdim(fmax(af_x,start_x),fmin(af_x, start_x));
+		else
+			scr->fractal->start_x = scr->fractal->start_x - fdim(fmax(af_x,start_x), fmin(af_x, start_x));
+		if (af_y >= 0)
+			scr->fractal->start_y = scr->fractal->start_y + fdim(fmax(af_y,start_y), fmin(af_y, start_y));
+		else
+			scr->fractal->start_y = scr->fractal->start_y - fdim(fmax(af_y,start_y),fmin(af_y, start_y));
+		display_screen_one(env);
 	}
-	else if (button == 1)
-	{
-		scr->fractal->zoom = scr->fractal->zoom * 1.1;
-		if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
-			scr->fractal->iteration = scr->fractal->iteration + 1;
-	}
-	af_x =  ((scr->ratio_x * (x - scr->width / 2.0) / (0.5  * scr->fractal->zoom * scr->width)));
-	af_y = 0 - (scr->ratio_y * ((y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
-	if (af_x >= 0)
-		scr->fractal->start_x = scr->fractal->start_x + fdim(fmax(af_x,start_x),fmin(af_x, start_x));
-	else
-		scr->fractal->start_x = scr->fractal->start_x - fdim(fmax(af_x,start_x), fmin(af_x, start_x));
-	if (af_y >= 0)
-		scr->fractal->start_y = scr->fractal->start_y + fdim(fmax(af_y,start_y), fmin(af_y, start_y));
-	else
-		scr->fractal->start_y = scr->fractal->start_y - fdim(fmax(af_y,start_y),fmin(af_y, start_y));
-	display_screen_one(env);
 	return (0);
 }
