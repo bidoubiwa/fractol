@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:21:14 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 14:12:23 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@
 # define KEY_RESET 15
 # define WIDTH 600
 # define HEIGHT 400
-# define PTR_MOTION_MASK (1L<<6)
 # define MOTION_NOTIFY 6
+# define KEY_PRESS 2
+# define PTR_MOTION_MASK (1L<<6)
+#define KEY_PRESS_MASK	(1L<<0)
 
 typedef struct		s_iter
 {
@@ -77,6 +79,7 @@ typedef struct		s_env
 	int				color_size;
 	char			julia_loop;
 	char			show_menu;
+	char			zoom_enable;
 	struct s_screen	**screen;
 }					t_env;
 

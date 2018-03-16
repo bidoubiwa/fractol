@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:44:15 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:22:10 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 15:01:10 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ void		set_julia_loop(t_env *env)
 		env->julia_loop = 1;
 }
 
+int			enable_zoom(t_env *env)
+{
+	if (env->zoom_enable)
+		env->zoom_enable = 0;
+	else
+		env->zoom_enable = 1;
+	return (0);
+}
+
 int			key_hook(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESCAPE)
@@ -45,6 +54,8 @@ int			key_hook(int keycode, t_env *env)
 		mlx_destroy_window(env->mlx, env->win);
 		exit(EXIT_FAILURE);
 	}
+	if (keycode == KEY_Z)
+		enable_zoom(env);
 	if (keycode == KEY_L)
 		set_julia_loop(env);
 	if (keycode == KEY_M)

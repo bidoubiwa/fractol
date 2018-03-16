@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:40:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 22:14:09 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 14:58:27 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_antibuddhabrot(t_fractal *fractal)
 {
 	fractal->f = &antibuddhabrot;
 	fractal->name = 'a';
-	fractal->iteration = 1000;
+	fractal->iteration = 100;
 	fractal->zoom = 0.5;
 	fractal->const_x = 0;
 	fractal->const_y = 0;

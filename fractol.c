@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:26:36 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 14:20:53 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_mlx(t_env *env, t_iter *iter)
 {
 	env->show_menu = 1;
 	env->julia_loop = 0;
+	env->zoom_enable = 0;
 	env->color = 0;
 	env->color_size = 200;
 	env->mlx = mlx_init();

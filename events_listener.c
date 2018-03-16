@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:21:30 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 14:29:07 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void		events_listener(t_env *env)
 	mlx_key_hook(env->win, key_hook, env);
 	mlx_mouse_hook(env->win, mouse_hook, env);
 	mlx_hook(env->win, MOTION_NOTIFY, PTR_MOTION_MASK, julia_loop, env);
+	dprintf(1, "jusqu'ici tout va bien\n");
 }
