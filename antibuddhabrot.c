@@ -6,18 +6,18 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:55:14 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:19:47 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int		iter_anti(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
+int		iter_anti(t_iter *iter, int nbr_iter, t_screen *scr)
 {
-	double	x_tmp;
-	int		i;
-  	double	pixel_x;
-  	double	pixel_y;
+	double		x_tmp;
+	int			i;
+	double		pixel_x;
+	double		pixel_y;
 
 	iter->o_x = iter->x;
 	iter->o_y = iter->y;
@@ -55,14 +55,12 @@ void	*thread_anti(void *arg)
 		x = scr->min_x;
 		real_y  = 0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) / 
 			(0.5 * scr->fractal->zoom * scr->height))) + scr->fractal->start_y;
-//		printf("real : %f\n", iter.y);
 		while (x < scr->max_x)
 		{
 			iter.y = real_y;
-//			printf("iter : %f\n", iter.y);
 			iter.x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
 			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
-				iter_anti(&iter, scr->fractal->iteration, scr, ((y * WIDTH_SCREEN) + x));
+				iter_anti(&iter, scr->fractal->iteration, scr);
 			x++;
 		}
 		y++;
@@ -78,6 +76,7 @@ int		antibuddhabrot(t_env *env)
 	int			i;
 	int			nbr_screen;
 
+	screens = NULL;
 	nbr_screen = get_screen_by_fractal_name(env, 'a');
 	if (!(screens = init_args(screens, nbr_screen, env)))
 		return (0);	

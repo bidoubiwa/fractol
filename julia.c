@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:56:37 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 17:51:48 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ int		iter_julia(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 	while ( (iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
 		if (i > 0)
-			scr->data_addr[pixel]  = palette(i);
+		{
+			
+		//	scr->data_addr[pixel]  = (i <= 255) ? rgb_to_hex(i, i, i) : rgb_to_hex(255, 255 - (i - 255), 
+			//		255 - (i - 255)) ; 
+			//scr->data_addr[pixel]  = (scr->data_addr[pixel] + (0x020202 * i) > 0xffffff)  ; 
+			scr->data_addr[pixel]  = palette(i) + (i * 0x020202);
+		}
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
@@ -72,6 +78,7 @@ int			julia(t_env *env)
 	int			i;
 	int			nbr_screen;
 
+	screens = NULL;
 	nbr_screen = get_screen_by_fractal_name(env, 'j');
 	if (!(screens = init_args(screens, nbr_screen, env)))
 		return (0);	

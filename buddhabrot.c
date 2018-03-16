@@ -6,48 +6,19 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 20:56:15 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:19:11 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_path	*add_chain(int x, int y, t_path *begin)
+int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 {
-	t_path	*tmp;
-
-	tmp = ft_memalloc(sizeof(t_path));
-	if (begin == NULL)
-		tmp->next = NULL;
-	else
-		tmp->next = begin;
-	tmp->x = x;
-	tmp->y = y;
-	return (tmp);
-}
-
-void	free_path(t_path *begin)
-{
-	t_path *tmp;
-
-	while (begin)
-	{
-		tmp = begin;
-		begin = begin->next;
-		free(tmp);
-	}
-}
-
-int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
-{
-	t_path	*path;
-	t_path	*tmp;
 	int		i;
 	double	pixel_x;
 	double	pixel_y;
 	double	x_tmp;
 
-	path = NULL;
 	pixel_x = 0;
 	pixel_y = 0;
 	iter->o_x = iter->x;
@@ -55,8 +26,6 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 	i = 0;
 	while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
-		if ((int)round(pixel_y) >= 0 && (int)round(pixel_y) < HEIGHT_SCREEN && (int)round(pixel_x) >= 0 && (int)round(pixel_x) < WIDTH_SCREEN) 
-			path = add_chain((int)round(pixel_x), (int)round(pixel_y), path);
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
@@ -66,21 +35,21 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 	}
 	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && i != scr->fractal->iteration && i > 10)
 	{
-		tmp = path;
-		while (path)
+		iter->x = iter->o_x;
+		iter->y = iter->o_y;
+		i = 0;
+		while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 		{
-			scr->data_addr[(path->y * WIDTH_SCREEN) + path->x] = scr->data_addr[(path->y * WIDTH_SCREEN) + path->x] + 0x161616;
-			path = path->next;
+			if ((int)round(pixel_x) >= scr->min_scr_x && (int)round(pixel_x) <= scr->max_scr_x  && (int)round(pixel_y) >= scr->min_scr_y && (int)round(pixel_y) <= scr->max_scr_y && i < 20)
+				scr->data_addr[((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x)] = 
+					scr->data_addr[((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x)] + 0x161616;
+			x_tmp = iter->x;
+			iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
+			iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
+			pixel_x = (((iter->x - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x) + (scr->width * 0.5) + scr->min_scr_x;
+			pixel_y = (scr->height * 0.5) - (iter->y - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
+			i++;
 		}
-		free_path(tmp);
-		path = NULL;
-		tmp = NULL;
-	}
-	else
-	{
-		free_path(path);
-		tmp = NULL;
-		path = NULL;
 	}
 	return (0);
 }
@@ -105,7 +74,7 @@ void	*thread_buddha(void *arg)
 			iter.y = real_y;
 			iter.x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
 			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
-				iter_buddha(&iter, scr->fractal->iteration, scr, ((y * WIDTH_SCREEN) + x));
+				iter_buddha(&iter, scr->fractal->iteration, scr);
 			x++;
 		}
 		y++;
@@ -120,6 +89,7 @@ int		buddhabrot(t_env *env)
 	int			i;
 	int			nbr_screen;
 
+	screens = NULL;
 	nbr_screen = get_screen_by_fractal_name(env, 'b');
 	if (!(screens = init_args(screens, nbr_screen, env)))
 		return (0);	

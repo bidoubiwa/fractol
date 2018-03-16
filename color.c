@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 17:52:30 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 13:57:19 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 17:53:49 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,41 @@ unsigned int rgb_to_hex(int r, int g, int b)
 
 unsigned int	palette(int iter)
 {
-	if (iter % 5 == 0)
-		return (0x251101);
+	
+/*	if (iter % 5 == 0)
+		return (0xC5CFD6);
 	else if (iter % 5 == 1)
-		return (0x470024);
+		return (0x8B9296);
 	else if (iter % 5 == 2)
-		return (0x5B1865);
+		return (0x505457);
 	else if (iter % 5 == 3)
-		return (0x2C5784);
+		return (0x44484A);
 	else
-		return (0x5688C7);
+		return (0x2F3133);
+*/
+/*
+	if (iter % 5 == 0)
+		return (0xffffff);
+	else if (iter % 5 == 1)
+		return (0xe6e6e6);
+	else if (iter % 5 == 2)
+		return (0xcccccc);
+	else if (iter % 5 == 3)
+		return (0xb3b3b3);
+	else
+		return (0x999999);
+*/
+		if (iter % 5 == 0)
+		return (0xAEB4A9);
+	else if (iter % 5 == 1)
+		return (0xE0C1B3);
+	else if (iter % 5 == 2)
+		return (0xD89A9E);
+	else if (iter % 5 == 3)
+		return (0xC37D92);
+	else
+		return (0x846267);
+		
 }
 
 unsigned int hsv_calculator(int hue, double saturation)

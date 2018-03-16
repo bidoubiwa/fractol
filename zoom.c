@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:52:04 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:52:38 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 16:54:32 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,9 @@ int			zoom(int button, int x, int y, t_env *env)
 		start_y = 0 - (scr->ratio_y * ( (y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
 		start_x = scr->ratio_x * (x - scr->width / 2.0) / (0.5 * scr->fractal->zoom  * scr->width);
 		if (button == 2)
-		{
 			scr->fractal->zoom = scr->fractal->zoom / 1.1;
-			if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
-				scr->fractal->iteration = scr->fractal->iteration - 1;
-		}
 		else if (button == 1)
-		{
 			scr->fractal->zoom = scr->fractal->zoom * 1.1;
-			if (scr->fractal->name == 'm' || scr->fractal->name == 'j')
-				scr->fractal->iteration = scr->fractal->iteration + 1;
-		}
 		af_x =  ((scr->ratio_x * (x - scr->width / 2.0) / (0.5  * scr->fractal->zoom * scr->width)));
 		af_y = 0 - (scr->ratio_y * ((y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
 		if (af_x >= 0)

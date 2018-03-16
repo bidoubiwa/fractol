@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 17:44:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 14:57:55 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 16:20:52 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_screen	**init_tmp_screens_info(t_screen **screens, t_env *env, int nbr_scr)
 		screens[i]->data_addr = env->data_addr;
 		screens[i]->min_scr_x = env->screen[nbr_scr]->min_x;
 		screens[i]->min_scr_y = env->screen[nbr_scr]->min_y;	
+		screens[i]->max_scr_x = env->screen[nbr_scr]->max_x;
+		screens[i]->max_scr_y = env->screen[nbr_scr]->max_y;	
 		screens[i]->ratio_x = env->screen[nbr_scr]->ratio_x;	
 		screens[i]->ratio_y = env->screen[nbr_scr]->ratio_y;	
 		i++;
@@ -50,26 +52,24 @@ t_screen	**init_tmp_screens_info(t_screen **screens, t_env *env, int nbr_scr)
 
 t_screen	**init_args(t_screen **screens, int nbr_scr, t_env *env)
 {
-	int		i;
-	
 	if (!(screens = create_tmp_screens(screens)))
 		return (NULL);	
 	screens = init_tmp_screens_info(screens, env, nbr_scr);		
 	init_arg_limits(env->screen[nbr_scr]->min_x , 
-			env->screen[nbr_scr]->min_y, screens[0], env);
+			env->screen[nbr_scr]->min_y, screens[0]);
 	init_arg_limits(env->screen[nbr_scr]->min_x + env->screen[nbr_scr]->width / 2, 
-			env->screen[nbr_scr]->min_y , screens[1], env);
+			env->screen[nbr_scr]->min_y , screens[1]);
 	init_arg_limits(env->screen[nbr_scr]->min_x, 
 			env->screen[nbr_scr]->min_y + env->screen[nbr_scr]->height / 2, 
-			screens[2], env);	
+			screens[2]);	
 	init_arg_limits(env->screen[nbr_scr]->min_x + env->screen[nbr_scr]->width / 2, 
 			env->screen[nbr_scr]->min_y + env->screen[nbr_scr]->height / 2, 
-			screens[3], env);
+			screens[3]);
 	return (screens);
 }
 
 
-void	init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env)
+void	init_arg_limits(int min_x, int min_y, t_screen *screen)
 {
 	screen->min_x = min_x;
 	screen->max_x = screen->min_x + screen->width / 2;

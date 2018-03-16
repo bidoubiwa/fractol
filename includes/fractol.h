@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 14:12:23 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 17:33:33 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef	struct			s_screen
 	t_fractal			*fractal;
 	int					min_scr_x;
 	int					min_scr_y;
+	int					max_scr_x;
+	int					max_scr_y;
 	int					min_x;
 	int					max_x;
 	int					min_y;
@@ -136,7 +138,7 @@ t_fractal			*get_fractal(int order);
 int					get_screen_by_fractal_name(t_env *env, char c);
 t_screen			*get_screen_ptr_by_fractal_name(t_env *env, char c);
 t_screen			**init_args(t_screen **screens, int nbr_screen, t_env *env);
-void				init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env);
+void				init_arg_limits(int min_x, int min_y, t_screen *screen);
 int					key_hook(int keycode, t_env *env);
 int					loop_hook(int x, int y, t_env *env);
 int					julia_loop(int x, int y, t_env *env);
@@ -148,4 +150,5 @@ void				display_fractals(t_env *env);
 void				display_screen_one(t_env *env);
 void				clear_and_redraw(t_env *env);
 void				clear_zone(int zone, t_env *env);
+unsigned int 		rgb_to_hex(int r, int g, int b);
 #endif
