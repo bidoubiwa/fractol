@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:45:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 13:21:49 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 13:27:59 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ int			julia_loop(int x, int y, t_env *env)
 	{
 		zone = check_zone(x, y, env);
 		scr = env->screen[zone - 1];
-		if (scr->fractal->name == 'j')
+		if (zone == 1 && scr->fractal->name == 'j')
 		{
-			scr->fractal->const_x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
-			scr->fractal->const_y =  0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height))) + scr->fractal->start_y;
+			scr->fractal->const_x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / 
+					(0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
+			scr->fractal->const_y =  0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) /
+					(0.5 * scr->fractal->zoom * scr->height))) + scr->fractal->start_y;
+			clear_zone(zone, env);
+			display_screen_one(env);
 		}
-		clear_zone(zone, env);
-		display_screen_one(env);
 	}
 	return (0);
 }
