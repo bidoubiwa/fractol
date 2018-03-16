@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:57:56 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 13:21:14 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,25 @@
 # define WIDTH_SCREEN 2560
 # define HEIGHT_SCREEN 1440
 
+# define MOUSE_ZOOM_IN 5
+# define MOUSE_ZOOM_OUT 4
+# define KEY_ZOOM_IN 69
+# define KEY_ZOOM_OUT 78
+# define KEY_ESC 53
+# define KEY_MOUSE_STOP 49
+# define KEY_PSYCHEDELIC 19
+# define KEY_AUTO_ZOOM 18
+# define KEY_DEEP_ADD 116
+# define KEY_DEEP_SUB 121
+# define KEY_UP 126
+# define KEY_LEFT 123
+# define KEY_DOWN 125
+# define KEY_RIGHT 124
+# define KEY_RESET 15
+# define WIDTH 600
+# define HEIGHT 400
+# define PTR_MOTION_MASK (1L<<6)
+# define MOTION_NOTIFY 6
 
 typedef struct		s_iter
 {
@@ -56,7 +75,7 @@ typedef struct		s_env
 	int				iteration;
 	int				color;
 	int				color_size;
-	char			loop;
+	char			julia_loop;
 	char			show_menu;
 	struct s_screen	**screen;
 }					t_env;
@@ -117,6 +136,7 @@ t_screen			**init_args(t_screen **screens, int nbr_screen, t_env *env);
 void				init_arg_limits(int min_x, int min_y, t_screen *screen, t_env *env);
 int					key_hook(int keycode, t_env *env);
 int					loop_hook(int x, int y, t_env *env);
+int					julia_loop(int x, int y, t_env *env);
 int					mouse_hook(int button, int x, int y, t_env *env);
 int					zoom(int button, int x, int y, t_env *env);
 void				clear_image(t_env *env);
@@ -124,4 +144,5 @@ void				color_menu(t_env *env);
 void				display_fractals(t_env *env);
 void				display_screen_one(t_env *env);
 void				clear_and_redraw(t_env *env);
+void				clear_zone(int zone, t_env *env);
 #endif

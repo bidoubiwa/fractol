@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:44:15 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 21:51:27 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/16 13:22:10 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ void		set_menu(t_env *env)
 	clear_and_redraw(env);
 }
 
+void		set_julia_loop(t_env *env)
+{
+	if (env->julia_loop)
+		env->julia_loop = 0;
+	else
+		env->julia_loop = 1;
+}
+
 int			key_hook(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESCAPE)
@@ -38,12 +46,7 @@ int			key_hook(int keycode, t_env *env)
 		exit(EXIT_FAILURE);
 	}
 	if (keycode == KEY_L)
-	{
-		if (env->loop)
-			env->loop = 0;
-		else
-			env->loop = 1;
-	}
+		set_julia_loop(env);
 	if (keycode == KEY_M)
 		set_menu(env);
 	if (keycode == KEY_C)
