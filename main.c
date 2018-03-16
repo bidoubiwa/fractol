@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 16:23:50 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/16 18:10:40 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void		display_screen_one(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
+void		safe_exit(t_env *env)
+{
+	mlx_destroy_image(env->mlx, env->img);
+	mlx_destroy_window(env->mlx, env->win);
+	exit(EXIT_FAILURE);
+}
+
 void		display_fractals(t_env *env)
 {
 	int	i;
@@ -51,21 +58,26 @@ void		display_fractals(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
-int		main()
+int		main(int ac, char **av)
 {
 	t_env		env;
 	t_screen	**screens;
-	
+
+	(void)ac;
+	(void)av;
 	screens = NULL;
 	init_mlx(&env);
 	printf("size : %lu\n",sizeof(t_path));
 	if (!(env.screen = init_screens(screens, env.show_menu)))
-		return (ft_printf("Initiation of screens went wrong"));
-	display_fractals(&env);
-	events_listener(&env);
-	mlx_loop(env.mlx);
-	free_fractal(screens);
-	free_screens(screens);
+		safe_exit(&env);
+	else 
+	{	
+		display_fractals(&env);
+		events_listener(&env);
+		mlx_loop(env.mlx);
+		free_fractal(screens);
+		free_screens(screens);
+	}
 	return (0);
 }
 
