@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 14:20:53 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/17 17:26:52 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	init_mlx(t_env *env, t_iter *iter)
 void		display_screen_one(t_env *env)
 {
 	env->screen[0]->fractal->f(env);
+	if (env->show_menu)
+		display_info_menu(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 

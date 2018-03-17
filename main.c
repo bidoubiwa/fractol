@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 18:10:40 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/17 15:51:32 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 void	init_mlx(t_env *env)
 {
 	env->show_menu = 1;
+	env->show_info = 1;
 	env->julia_loop = 0;
 	env->zoom_enable = 0;
 	env->color = 0;
 	env->color_size = 200;
 	env->mlx = mlx_init();
-	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "titre");
+	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "Fractol");
 	env->img = mlx_new_image(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN);
 	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img, &env->bits_per_pixel, &env->bytes_per_line, &env->endian);
 }
@@ -30,6 +31,8 @@ void		display_screen_one(t_env *env)
 	clear_zone(1, env);
 	env->screen[0]->fractal->f(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	if (env->show_info)
+		display_info_menu(env);
 }
 
 void		safe_exit(t_env *env)
@@ -56,6 +59,8 @@ void		display_fractals(t_env *env)
 	else
 		env->screen[0]->fractal->f(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	if (env->show_info)
+		display_info_menu(env);
 }
 
 int		main(int ac, char **av)
@@ -67,7 +72,6 @@ int		main(int ac, char **av)
 	(void)av;
 	screens = NULL;
 	init_mlx(&env);
-	printf("size : %lu\n",sizeof(t_path));
 	if (!(env.screen = init_screens(screens, env.show_menu)))
 		safe_exit(&env);
 	else 

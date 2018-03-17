@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 18:55:58 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/13 16:34:00 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/17 18:00:49 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,7 @@ double				ft_to_radians(double degree);
 double				ft_to_degrees(double radians);
 int					ft_check_arguments(char *exec, int ac, int min, int max);
 int					ft_dim(int x, int y);
+int					ft_min_of_3(int x, int y, int z);
+int					ft_max_of_3(int x, int y, int z);
+unsigned int		ft_rgb_to_hex(int r, int g, int b);
 #endif

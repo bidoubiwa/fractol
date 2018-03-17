@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 17:33:33 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/17 18:44:34 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ typedef struct		s_iter
 	double		y;
 }					t_iter;
 
-typedef struct		s_path
-{
-	int				x;
-	int				y;
-	struct s_path	*next;
-}					t_path;
-
 struct		s_screen;
 
 typedef struct		s_env
@@ -80,6 +73,7 @@ typedef struct		s_env
 	char			julia_loop;
 	char			show_menu;
 	char			zoom_enable;
+	char			show_info;
 	struct s_screen	**screen;
 }					t_env;
 
@@ -127,6 +121,9 @@ void				free_fractal(t_screen **screens);
 void				free_screens(t_screen **screens);
 void				events_listener(t_env *env);
 unsigned int		hsv_calculator(int hue, double saturation);
+unsigned int		hsl_calculator(int hue, double saturation, double light);
+unsigned int		hex_to_rgb_to_hsl(unsigned int hex, int iter);
+unsigned int		merge_two_colors(unsigned int color1, unsigned int color2);
 unsigned int		palette(int	iter);
 void				draw_circle(t_env *env);
 void				get_screen_ratio(double width, double height, t_screen *screen);
@@ -150,5 +147,7 @@ void				display_fractals(t_env *env);
 void				display_screen_one(t_env *env);
 void				clear_and_redraw(t_env *env);
 void				clear_zone(int zone, t_env *env);
-unsigned int 		rgb_to_hex(int r, int g, int b);
+void				display_info_menu(t_env *env);
+void				toggle_info_menu(t_env *env);
+
 #endif

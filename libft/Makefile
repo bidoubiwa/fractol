@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/08 08:28:21 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/13 16:37:39 by cvermand         ###   ########.fr        #
+#    Updated: 2018/03/17 18:16:55 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ _LSRC 		=	ft_putchar.c ft_putstr.c ft_memset.c ft_bzero.c ft_memcpy.c \
 				get_next_line.c ft_swap.c ft_strisvalidint.c\
 				ft_get_fd.c ft_strtabdup.c ft_strtablen.c ft_min_int.c\
 				ft_check_arguments.c ft_to_degrees.c ft_to_radians.c\
-				ft_dim.c
+				ft_dim.c ft_min_of_3.c ft_max_of_3.c ft_rgb_to_hex.c
 
 PRINTF_DIR	= printf
 LIBFT_DIR	= basics
