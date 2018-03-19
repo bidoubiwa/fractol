@@ -6,13 +6,13 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 15:51:32 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/19 12:06:31 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_mlx(t_env *env)
+int			init_mlx(t_env *env)
 {
 	env->show_menu = 1;
 	env->show_info = 1;
@@ -20,10 +20,14 @@ void	init_mlx(t_env *env)
 	env->zoom_enable = 0;
 	env->color = 0;
 	env->color_size = 200;
+	if (!(set_palettes(env)))
+		return (0);
+	env->palette = 0;
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "Fractol");
 	env->img = mlx_new_image(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN);
 	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img, &env->bits_per_pixel, &env->bytes_per_line, &env->endian);
+	return (1);
 }
 
 void		display_screen_one(t_env *env)
@@ -71,7 +75,8 @@ int		main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	screens = NULL;
-	init_mlx(&env);
+	if (!(init_mlx(&env)))
+		safe_exit(&env);
 	if (!(env.screen = init_screens(screens, env.show_menu)))
 		safe_exit(&env);
 	else 

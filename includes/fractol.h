@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 18:44:34 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/19 11:56:52 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define FRACTOL_H
 # include <math.h>
 # include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
+
 # include <pthread.h>
 # include "../libft/includes/libft.h"
 # include "../minilibx_macos/mlx.h"
@@ -55,27 +54,29 @@ typedef struct		s_iter
 
 struct		s_screen;
 
-typedef struct		s_env
+typedef struct			s_env
 {
-	void			*mlx;
-	void			*win;
-	void			*img;
-	unsigned int	*data_addr;
-	char			*title;
-	int				bits_per_pixel;
-	int				bytes_per_line;
-	int				endian;
-	int				win_width;
-	int				win_height;
-	int				iteration;
-	int				color;
-	int				color_size;
-	char			julia_loop;
-	char			show_menu;
-	char			zoom_enable;
-	char			show_info;
-	struct s_screen	**screen;
-}					t_env;
+	void				*mlx;
+	void				*win;
+	void				*img;
+	unsigned int		*data_addr;
+	char				*title;
+	int					bits_per_pixel;
+	int					bytes_per_line;
+	int					endian;
+	int					win_width;
+	int					win_height;
+	int					iteration;
+	int					color;
+	int					color_size;
+	char				julia_loop;
+	char				show_menu;
+	char				zoom_enable;
+	char				show_info;
+	unsigned int		**palettes;
+	int					palette;
+	struct s_screen		**screen;
+}						t_env;
 
 typedef struct			s_fractal
 {
@@ -105,8 +106,11 @@ typedef	struct			s_screen
 	int					max_y;
 	int					width;
 	int					height;
+	int					palette;
+	unsigned int		**palettes;
 	unsigned int		*data_addr;
 }						t_screen;
+
 
 int					mandelbrot(t_env *env);
 int					buddhabrot(t_env *env);
@@ -149,5 +153,5 @@ void				clear_and_redraw(t_env *env);
 void				clear_zone(int zone, t_env *env);
 void				display_info_menu(t_env *env);
 void				toggle_info_menu(t_env *env);
-
+int					set_palettes(t_env *env);
 #endif

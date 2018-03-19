@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 17:00:08 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 12:10:43 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	mandelbrot_iter(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 	while (((iter->x * iter->x) + (iter->y * iter->y)) < 4 && i <= nbr_iter)
 	{
 		if (i > 0)
-			scr->data_addr[pixel] = palette(i);
+			scr->data_addr[pixel] =	scr->palettes[scr->palette][i % 5];
 		x_tmp = iter->x;
 		y_tmp = iter->y;
 		iter->x = (x_tmp * x_tmp) - (y_tmp * y_tmp) + input_x;
@@ -65,7 +65,7 @@ void	*thread_mandelbrot(void *arg)
 			iter.y = real_y;
 			iter.x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
 			if (is_in_safe_range(iter.x, iter.y))
-				scr->data_addr[(y * WIDTH_SCREEN) + x] = palette(1);
+				scr->data_addr[(y * WIDTH_SCREEN) + x] = scr->palettes[scr->palette][1];
 			else if (((iter.x * iter.x) + (iter.y * iter.y)) < 4)
 			{
 				mandelbrot_iter(&iter, scr->fractal->iteration, scr, (y * WIDTH_SCREEN) + x);

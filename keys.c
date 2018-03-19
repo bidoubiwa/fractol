@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:44:15 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 16:26:46 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/19 11:50:51 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ int			enable_zoom(t_env *env)
 	return (0);
 }
 
+int			change_palette(t_env *env, int keycode)
+{
+	if (keycode == KEY_LEFT)
+	{
+		if (env->palette == 0)
+			env->palette = 4;
+		else
+			env->palette--;
+	}
+	if (keycode == KEY_RIGHT)
+	{
+		if (env->palette == 4)
+			env->palette = 0;
+		else
+			env->palette++;
+	}
+	clear_and_redraw(env);
+	return (0);
+}
+
 int			key_hook(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESCAPE)
@@ -70,6 +90,8 @@ int			key_hook(int keycode, t_env *env)
 		set_julia_loop(env);
 	if (keycode == KEY_M)
 		set_menu(env);
+	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
+		change_palette(env, keycode);
 	//if (keycode == KEY_C)
 	//	color_menu(env);
 	return (0);
