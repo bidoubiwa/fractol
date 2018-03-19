@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                         :+:      :+:    :+:   */
+/*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 13:44:15 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 11:50:51 by pfaust           ###   ########.fr       */
+/*   Created: 2018/03/19 13:30:59 by pfaust            #+#    #+#             */
+/*   Updated: 2018/03/19 13:32:24 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-void		toggle_first_screen_size(t_env *env)
-{
-	env->screen[0]->max_x = get_x_max(1, env->show_menu);
-	env->screen[0]->width = ft_dim(env->screen[0]->max_x, env->screen[0]->min_x);
-	get_screen_ratio((double)env->screen[0]->width, (double)env->screen[0]->height, env->screen[0]);
-}
-
-void		set_menu(t_env *env)
-{
-	if (env->show_menu)
-		env->show_menu = 0;
-	else
-		env->show_menu = 1;
-	toggle_first_screen_size(env);
-	clear_and_redraw(env);
-}
 
 void		set_julia_loop(t_env *env)
 {
@@ -92,9 +75,5 @@ int			key_hook(int keycode, t_env *env)
 		set_menu(env);
 	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
 		change_palette(env, keycode);
-	//if (keycode == KEY_C)
-	//	color_menu(env);
 	return (0);
 }
-
-
