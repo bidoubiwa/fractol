@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 17:51:48 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 12:12:25 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		iter_julia(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 		//	scr->data_addr[pixel]  = (i <= 255) ? rgb_to_hex(i, i, i) : rgb_to_hex(255, 255 - (i - 255), 
 			//		255 - (i - 255)) ; 
 			//scr->data_addr[pixel]  = (scr->data_addr[pixel] + (0x020202 * i) > 0xffffff)  ; 
-			scr->data_addr[pixel]  = palette(i) + (i * 0x020202);
+			scr->data_addr[pixel] = scr->palettes[scr->palette][i % 5];
 		}
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
