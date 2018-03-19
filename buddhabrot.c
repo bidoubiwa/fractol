@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 16:37:33 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 17:28:58 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 	int				i;
 	double			pixel_x;
 	double			pixel_y;
+//	double			pixel_tmp_x;
 	double			x_tmp;
 	int				pos;
 
@@ -52,8 +53,11 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
-		pixel_x = (((iter->x - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x) + (scr->width * 0.5) + scr->min_scr_x;
-		pixel_y = (scr->height * 0.5) - (iter->y - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
+		pixel_x = 0 - (((iter->y - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x) + (scr->width * 0.5) + scr->min_scr_x;
+		pixel_y = (scr->height * 0.5) - ((0 - iter->x) - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
+		//pixel_tmp_x = pixel_x;
+		//pixel_x = 0 - pixel_y;
+		//pixel_y = pixel_tmp_x;
 		i++;
 	}
 }
