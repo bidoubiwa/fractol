@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 16:59:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:38:29 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 13:29:41 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_screen	**create_screens(t_screen **screens)
 	if (!(screens = ft_memalloc(sizeof(t_screen *) * 4)))
 		return (NULL);
 	while (i < 4)
-	{		
+	{
 		if (!(screens[i] = ft_memalloc(sizeof(t_screen))))
 			return (NULL);
 		i++;
@@ -59,7 +59,8 @@ t_screen	**init_screens(t_screen **screen, char menu_on)
 		screen[i]->max_y = get_y_max(i + 1);
 		screen[i]->width = ft_dim(screen[i]->max_x, screen[i]->min_x);
 		screen[i]->height = ft_dim(screen[i]->max_y, screen[i]->min_y);
-		get_screen_ratio((double)screen[i]->width, (double)screen[i]->height, screen[i]);
+		get_screen_ratio((double)screen[i]->width,
+				(double)screen[i]->height, screen[i]);
 		if (!(screen[i]->fractal = get_fractal(i + 1)))
 			return (0);
 		screen[i]->order = i + 1;
@@ -67,4 +68,3 @@ t_screen	**init_screens(t_screen **screen, char menu_on)
 	}
 	return (screen);
 }
-
