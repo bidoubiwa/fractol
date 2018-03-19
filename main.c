@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 12:06:31 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 13:35:15 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int			init_mlx(t_env *env)
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "Fractol");
 	env->img = mlx_new_image(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN);
-	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img, &env->bits_per_pixel, &env->bytes_per_line, &env->endian);
+	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img,
+			&env->bits_per_pixel, &env->bytes_per_line, &env->endian);
 	return (1);
 }
 
@@ -51,7 +52,6 @@ void		display_fractals(t_env *env)
 	int	i;
 
 	i = 0;
-		
 	if (env->show_menu)
 	{
 		while (i < 4)
@@ -67,7 +67,7 @@ void		display_fractals(t_env *env)
 		display_info_menu(env);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_env		env;
 	t_screen	**screens;
@@ -79,8 +79,8 @@ int		main(int ac, char **av)
 		safe_exit(&env);
 	if (!(env.screen = init_screens(screens, env.show_menu)))
 		safe_exit(&env);
-	else 
-	{	
+	else
+	{
 		display_fractals(&env);
 		events_listener(&env);
 		mlx_loop(env.mlx);
@@ -89,5 +89,3 @@ int		main(int ac, char **av)
 	}
 	return (0);
 }
-
-
