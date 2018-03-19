@@ -6,7 +6,7 @@
 /*   By: pfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 16:26:04 by pfaust            #+#    #+#             */
-/*   Updated: 2018/03/16 16:26:25 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 13:12:47 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void		clear_image(t_env *env)
 
 void		clear_zone(int zone, t_env *env)
 {
-	t_screen 	*scr;
+	t_screen	*scr;
 	int			x;
 	int			y;
 
 	scr = env->screen[zone - 1];
 	y = scr->min_y;
-	while (y <= scr->max_y)
+	while (y < scr->max_y)
 	{
 		x = scr->min_x;
-		while (x <= scr->max_x)
+		while (x < scr->max_x)
 		{
 			if (env->data_addr[y * WIDTH_SCREEN + x] != 0)
 				env->data_addr[y * WIDTH_SCREEN + x] = 0;
@@ -51,4 +51,3 @@ void		clear_and_redraw(t_env *env)
 	clear_image(env);
 	display_fractals(env);
 }
-
