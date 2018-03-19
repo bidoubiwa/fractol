@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 17:52:30 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 18:44:28 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/19 15:29:20 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ unsigned int merge_two_colors(unsigned int color1, unsigned int color2)
 	r = ((color1 >> 16) + (color2 >> 16)) / 2;
 	g = (((color1 >> 8) & 0xff) + ((color2 >> 8) & 0xff)) / 2;
 	b = ((color1 & 0xff) + (color2  & 0xff)) / 2;
+	if (r > 255 || b > 255 || b > 255)
+		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 	return (rgb_to_hex(r, g, b));
 }
 
@@ -92,8 +94,7 @@ unsigned int rgb_to_hsl(int r, int g, int b, int iter)
 	else
 		hue = 0;
 	saturation = c / (1.0 - fabs(2 * l - 1.0));
-//	printf("rgb : (%d, %d, %d) hsl : (%f, %f, %f)\n", r, g, b, hue, saturation, l);
-	l = l + (0.4 * iter);
+	l = l + (0.04 * iter);
 	if (l > 1)
 		l = 1;
 	return (hsl_calculator((int)hue, saturation, l));
@@ -119,9 +120,6 @@ unsigned int hsl_calculator(int hue, double saturation, double light)
 	double	min;
 	double  x;
 
-	//hue = iter * 6;
-	//saturation = 0.79;
-	//bright = 0.70;
 	chroma = (1 - fabs(2 * light)) * saturation;
 	min = 1 * (light - 0.5 * chroma);
 	x = chroma * (1 - fabs(fmod(hue / 20.0, 2) - 1));

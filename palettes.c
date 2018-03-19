@@ -6,7 +6,7 @@
 /*   By: pfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 10:51:24 by pfaust            #+#    #+#             */
-/*   Updated: 2018/03/19 11:45:09 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 12:15:37 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		fill_palettes(unsigned int ***palettes)
 	(*palettes)[1][2] = 0x119da4;
 	(*palettes)[1][3] = 0x0e858a;
 	(*palettes)[1][4] = 0x0c6c71;
-	(*palettes)[2][0] = 0xA4B494;
+	(*palettes)[2][0] = 0xffffff;
 	(*palettes)[2][1] = 0xC57B57;
 	(*palettes)[2][2] = 0xF1AB86;
 	(*palettes)[2][3] = 0xF7DBA7;

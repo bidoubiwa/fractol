@@ -6,7 +6,7 @@
 /*   By: pfaust <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 16:26:04 by pfaust            #+#    #+#             */
-/*   Updated: 2018/03/19 13:12:47 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:05:09 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void		clear_and_redraw(t_env *env)
 {
 	clear_image(env);
 	display_fractals(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }

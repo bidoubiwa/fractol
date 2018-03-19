@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 16:19:47 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:22:08 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		iter_anti(t_iter *iter, int nbr_iter, t_screen *scr)
 	i = 0;
 	while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
-		if ((int)round(pixel_y) >= 0 && (int)round(pixel_y) < HEIGHT_SCREEN && (int)round(pixel_x) >= 0 && (int)round(pixel_x) < WIDTH_SCREEN && i > 1)
+		if ((int)round(pixel_x) > scr->min_scr_x && (int)round(pixel_x) < scr->max_scr_x
+				&& (int)round(pixel_y) > scr->min_scr_y && (int)round(pixel_y) < scr->max_scr_y && i > 50)
 		{
 			scr->data_addr[((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x)] = scr->data_addr[((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x)] + 0x040404;
 		}

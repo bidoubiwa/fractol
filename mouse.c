@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 13:45:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/16 17:04:20 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 13:20:24 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int			mouse_hook(int button, int x, int y, t_env *env)
 {
 	int		zone;
 
+	if (x < 0 || y < 0)
+		return (0);
 	zone = check_zone(x, y, env);
 	if (zone == 1 && env->zoom_enable == 1)
 		zoom(button, x, y, env);

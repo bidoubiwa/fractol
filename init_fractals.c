@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 12:40:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 13:28:53 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 16:37:54 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_buddhabrot(t_fractal *fractal)
 {
 	fractal->name = 'b';
 	fractal->f = &buddhabrot;
-	fractal->iteration = 350;
+	fractal->iteration = 300;
 	fractal->zoom = 0.5;
 	fractal->const_x = 0;
 	fractal->const_y = 0;

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/17 18:48:13 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/03/19 16:37:33 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,23 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 	double			pixel_x;
 	double			pixel_y;
 	double			x_tmp;
-	unsigned int	color;
-	int				hue;
 	int				pos;
 
-	hue = ft_to_degrees(atan2(iter->x, iter->y));
-	if (hue < 0)
-		hue = hue + 360;
-	if (hue > 360 || hue < 0)
-		printf("hue : %d\n", hue);	
-	color = hsl_calculator((int)round(hue), 1.0, 0.4);
-//	ft_printf("color: %#x\n", color);
+
 	pixel_x = 0;
 	pixel_y = 0;
 	i = 0;
 	while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
 		pos = ((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x);
-		if ((int)round(pixel_x) >= scr->min_scr_x && (int)round(pixel_x) <= scr->max_scr_x
-				&& (int)round(pixel_y) >= scr->min_scr_y && (int)round(pixel_y) <= scr->max_scr_y && i > 50)
+		if ((int)round(pixel_x) > scr->min_scr_x && (int)round(pixel_x) < scr->max_scr_x
+				&& (int)round(pixel_y) > scr->min_scr_y && (int)round(pixel_y) < scr->max_scr_y )
 		{
-			//printf("i :%d\n", i);
-			color = hsl_calculator((int)round(hue), 1.0, (i - 50) * 0.04);
-			if (scr->data_addr[pos])
-				scr->data_addr[pos] = color;
-			else
-				scr->data_addr[pos] = merge_two_colors(scr->data_addr[pos], color);
-			/*		if (i == 51)
-				scr->data_addr[pos] = color;
-			else
-				scr->data_addr[pos] = hex_to_rgb_to_hsl(scr->data_addr[pos]);*/
-			//scr->data_addr[pos] = scr->data_addr[pos] + 0x161616;
-//			hex_to_rgb_to_hsl(color);
-//			scr->data_addr[pos] = color;
+			if (0x3366cc < scr->data_addr[pos] + 0x091225)
+				scr->data_addr[pos] = (0xffffff - scr->data_addr[pos] < 0x040301) ? 0xffffff : scr->data_addr[pos] + 0x040301;
+			else 
+				scr->data_addr[pos] = scr->data_addr[pos] + 0x091225;
+				
 		}
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
@@ -82,7 +66,7 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 	iter->o_y = iter->y;
 	i = 0;
 	first_iter_buddha(iter, nbr_iter, &i);
-	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && i != scr->fractal->iteration && i > 30)
+	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && i < scr->fractal->iteration && i > nbr_iter / 2)
 	{
 		iter->x = iter->o_x;
 		iter->y = iter->o_y;

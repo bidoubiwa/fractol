@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 11:56:52 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 16:21:48 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ struct		s_screen;
 
 typedef struct			s_env
 {
+	char				*param;
 	void				*mlx;
 	void				*win;
 	void				*img;
@@ -80,6 +81,7 @@ typedef struct			s_env
 
 typedef struct			s_fractal
 {
+	double			zoom;
 	char			name;
 	int				(*f)(t_env*);
 	int				iteration;
@@ -87,7 +89,7 @@ typedef struct			s_fractal
 	double			start_y;
 	double			const_x;
 	double			const_y;
-	double			zoom;
+	unsigned int	hex;
 }						t_fractal;
 
 typedef	struct			s_screen
@@ -116,11 +118,12 @@ int					mandelbrot(t_env *env);
 int					buddhabrot(t_env *env);
 int					antibuddhabrot(t_env *env);
 int					julia(t_env *env);
+int					init_env(t_env *env, char *av);
 void				init_mandelbrot(t_fractal *fractal);
 void				init_buddhabrot(t_fractal *fractal);
 void				init_antibuddhabrot(t_fractal *fractal);
 void				init_julia(t_fractal *fractal);
-t_screen			**init_screens(t_screen **screen, char menu_on);
+t_screen			**init_screens(t_screen **screen, char menu_on, char *param);
 void				free_fractal(t_screen **screens);
 void				free_screens(t_screen **screens);
 void				events_listener(t_env *env);
@@ -154,4 +157,5 @@ void				clear_zone(int zone, t_env *env);
 void				display_info_menu(t_env *env);
 void				toggle_info_menu(t_env *env);
 int					set_palettes(t_env *env);
+void				set_menu(t_env *env);
 #endif

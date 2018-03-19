@@ -6,29 +6,23 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 13:35:15 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 14:43:54 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int			init_mlx(t_env *env)
+static int		valid_argument(char *str)
 {
-	env->show_menu = 1;
-	env->show_info = 1;
-	env->julia_loop = 0;
-	env->zoom_enable = 0;
-	env->color = 0;
-	env->color_size = 200;
-	if (!(set_palettes(env)))
-		return (0);
-	env->palette = 0;
-	env->mlx = mlx_init();
-	env->win = mlx_new_window(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN, "Fractol");
-	env->img = mlx_new_image(env->mlx, WIDTH_SCREEN, HEIGHT_SCREEN);
-	env->data_addr = (unsigned int*)mlx_get_data_addr(env->img,
-			&env->bits_per_pixel, &env->bytes_per_line, &env->endian);
-	return (1);
+	if (ft_strequ(str, "mandelbrot"))
+		return (1);
+	else if (ft_strequ(str, "julia"))
+		return (1);
+	else if (ft_strequ(str, "buddhabrot"))
+		return (1);
+	else if (ft_strequ(str, "anti-buddhabrot"))
+		return (1);
+	return (0);
 }
 
 void		display_screen_one(t_env *env)
@@ -72,12 +66,14 @@ int			main(int ac, char **av)
 	t_env		env;
 	t_screen	**screens;
 
-	(void)ac;
-	(void)av;
 	screens = NULL;
-	if (!(init_mlx(&env)))
+	if (!(ft_check_arguments("./fractol", ac, 1, 1)))
+		return (0);
+	if(!(valid_argument(av[1])))
+		return (0);
+	if (!(init_env(&env, av[1])))
 		safe_exit(&env);
-	if (!(env.screen = init_screens(screens, env.show_menu)))
+	if (!(env.screen = init_screens(screens, env.show_menu, env.param)))
 		safe_exit(&env);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 17:42:36 by cvermand          #+#    #+#             */
-/*   Updated: 2018/02/08 17:43:36 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/03/19 13:41:00 by pfaust           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		print_error_message(char *exec)
 {
 	ft_putstr("Usage : ");
 	ft_putstr(exec);
-	ft_putendl(" <filename>");
+	ft_putendl(" julia | mandelbrot | buddhabrot | anti-buddhabrot");
 	return (0);
 }
 
