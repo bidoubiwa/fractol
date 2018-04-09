@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mouse_hook.c                                       :+:      :+:    :+:   */
+/*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/15 13:45:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 13:20:24 by pfaust           ###   ########.fr       */
+/*   Created: 2018/04/09 16:39:50 by cvermand          #+#    #+#             */
+/*   Updated: 2018/04/09 19:46:18 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,41 @@ void		switch_screens(int button, int zone, t_env *env)
 	}
 }
 
+int		move_mouse(int button, int x, int y, t_env *env)
+{
+	t_screen	*scr;
+	double	start_y;
+	double	start_x;
+
+	printf("julia : %d zoom %d\n", env->julia_loop, env->zoom_enable);
+	if (env->julia_loop == 0 && env->zoom_enable == 0)
+	{
+		scr = env->screen[0];
+		
+		
+		start_y = 0 - (scr->ratio_y * ( (y - scr->height / 2.0) / (0.5 * scr->fractal->zoom * scr->height)));
+		start_x = scr->ratio_x * (x - scr->width / 2.0) / (0.5 * scr->fractal->zoom  * scr->width);
+		scr->fractal->start_x = -1 * start_x;
+		scr->fractal->start_y = -1 * start_y;
+		display_screen_one(env);
+	}
+	printf("Press button : %d x : %d y : %d \n",button, x, y);
+
+	return (1);
+}
+
 int			mouse_hook(int button, int x, int y, t_env *env)
 {
 	int		zone;
 
+	printf("button : %d\n", button);
 	if (x < 0 || y < 0)
 		return (0);
 	zone = check_zone(x, y, env);
 	if (zone == 1 && env->zoom_enable == 1)
 		zoom(button, x, y, env);
+	else if (zone == 1)
+		move_mouse(button, x, y, env);
 	else if (zone != 1)
 		switch_screens(button, zone, env);
 	return (0);

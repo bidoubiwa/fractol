@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 16:21:48 by pfaust           ###   ########.fr       */
+/*   Updated: 2018/04/09 19:44:14 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include "../libft/includes/libft.h"
 # include "../minilibx_macos/mlx.h"
 # include "mlx_keys_macos.h"
-# define WIDTH_SCREEN 2560
-# define HEIGHT_SCREEN 1440
+# include "X.h"
+# define WIDTH_SCREEN 1500
+# define HEIGHT_SCREEN 700
 
 # define MOUSE_ZOOM_IN 5
 # define MOUSE_ZOOM_OUT 4
@@ -158,4 +159,5 @@ void				display_info_menu(t_env *env);
 void				toggle_info_menu(t_env *env);
 int					set_palettes(t_env *env);
 void				set_menu(t_env *env);
+int					move_mouse(int button, int x, int y, t_env *env);
 #endif

@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/19 14:43:05 by pfaust           ###   ########.fr        #
+#    Updated: 2018/04/09 19:12:14 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,21 @@ _SRCS		=	main.c mandelbrot.c color.c events_listener.c julia.c \
 				zoom.c clear.c info_menu.c palettes.c init_env.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
-
+_HDR		=	fractol.h
 SRCS_DIR	=	.
 LIB_DIR		=	libft
 MLX_DIR		=	minilibx_macos
+HDR_DIR		=	includes
 SRCS		=	$(addprefix	$(SRCS_DIR)/, $(_SRCS))
 LIBFT		=	$(addprefix $(LIB_DIR)/, $(_LIBFT))
 MLX			=	$(addprefix $(MLX_DIR)/, $(_MLX))
+HDR			=	$(addprefix $(HDR_DIR)/, $(_HDR))
 
 OBJS		=	$(SRCS:.c=.o)
 
 all:	$(FRACTOL)
 
-$(FRACTOL) : $(LIBFT) $(MLX) $(OBJS)
+$(FRACTOL) : $(LIBFT) $(MLX) $(OBJS) $(HDR)
 	@$(CC) $(CFLAGS) -o $(FRACTOL) $(OBJS) -framework OpenGL -framework AppKit -L$(LIB_DIR) -lft -L$(MLX_DIR) -lmlx -lm -D_REENTRANT -lpthread
 	@echo "$(FRACTOL) : $(_GREEN)Done$(_END)"
 
@@ -44,7 +46,7 @@ $(LIBFT):
 $(MLX):
 	@make -C $(MLX_DIR)
 
-%.o : %.c
+%.o : %.c $(HDR)
 	$(CC) $(CFLAGS) -c $< -o $@ -I includes/
 
 clean:

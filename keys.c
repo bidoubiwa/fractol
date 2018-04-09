@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfaust <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/19 13:30:59 by pfaust            #+#    #+#             */
-/*   Updated: 2018/03/19 15:02:45 by pfaust           ###   ########.fr       */
+/*   Created: 2018/04/09 16:38:10 by cvermand          #+#    #+#             */
+/*   Updated: 2018/04/09 16:44:19 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			key_hook(int keycode, t_env *env)
 	{
 		mlx_destroy_image(env->mlx, env->img);
 		mlx_destroy_window(env->mlx, env->win);
-	//	exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	if (keycode == KEY_I)
 		toggle_info_menu(env);
