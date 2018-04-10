@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:38:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 16:44:19 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/10 17:34:27 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int			change_palette(t_env *env, int keycode)
 
 int			key_hook(int keycode, t_env *env)
 {
+
+	printf("key : %d\n", keycode);
 	if (keycode == KEY_ESCAPE)
 	{
 		mlx_destroy_image(env->mlx, env->img);
@@ -73,7 +75,8 @@ int			key_hook(int keycode, t_env *env)
 		set_julia_loop(env);
 	if (keycode == KEY_M)
 		set_menu(env);
-	if (keycode == KEY_LEFT || keycode == KEY_RIGHT)
-		change_palette(env, keycode);
+//	if (keycode == KEY_LEFT || keycode == KEY_RIGHT || keycode == KEY_LEFT || keycode == KEY_DOWN)
+	
+		//change_palette(env, keycode);
 	return (0);
 }

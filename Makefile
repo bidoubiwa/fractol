@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/04/09 19:12:14 by cvermand         ###   ########.fr        #
+#    Updated: 2018/04/10 15:48:59 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ _SRCS		=	main.c mandelbrot.c color.c events_listener.c julia.c \
 				color_menu.c buddhabrot.c antibuddhabrot.c \
 				struct_fractal.c screens_size.c thread_handling.c \
 				init_fractals.c init_screens.c keys.c mouse.c \
-				zoom.c clear.c info_menu.c palettes.c init_env.c
+				zoom.c clear.c info_menu.c palettes.c init_env.c\
+				move.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 _HDR		=	fractol.h

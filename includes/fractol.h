@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 19:44:14 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/10 17:22:00 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define MOTION_NOTIFY 6
 # define KEY_PRESS 2
 # define PTR_MOTION_MASK (1L<<6)
-#define KEY_PRESS_MASK	(1L<<0)
+# define KEY_PRESS_MASK	(1L<<0)
 
 typedef struct		s_iter
 {
@@ -160,4 +160,5 @@ void				toggle_info_menu(t_env *env);
 int					set_palettes(t_env *env);
 void				set_menu(t_env *env);
 int					move_mouse(int button, int x, int y, t_env *env);
+int					move_keys(int button, t_env *env);
 #endif
