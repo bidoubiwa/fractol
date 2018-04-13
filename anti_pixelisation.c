@@ -41,7 +41,7 @@ void		pixel_contour(int x, int y, t_screen *scr, t_env *env)
 			{
 				env->data_addr[get_pixel_index(x, y)] = merging_alpha_beta(
 						env->data_addr[get_pixel_index(x, y)], 
-						env->data_addr[get_pixel_index(x + small_x, y + small_y)], 0.5, 1);
+						env->data_addr[get_pixel_index(x + small_x, y + small_y)], 0.9, 0.1);
 			}
 			small_x++;
 		}
@@ -60,7 +60,7 @@ int					anti_pixelisation(t_env *env)
 	while (y < scr->max_y)
 	{
 		x = 0;
-		while (x < scr->max_y)
+		while (x < scr->max_x)
 		{
 			pixel_contour(x, y, scr, env);
 			x++;

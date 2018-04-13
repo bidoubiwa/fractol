@@ -21,11 +21,11 @@ void		color_buddha(t_screen *scr, int pixel, int i)
 	{
 		scr->data_addr[pixel] = merging_alpha(((i * (pal >> 16) % 255) << 16)
 				+ (((i * (pal >> 8)) % 255) << 8)
-				+ (i * (pal) % 255), scr->data_addr[pixel], 0.3);
+				+ (i * (pal) % 255), scr->data_addr[pixel], 0.1);
 	}
 	else
 		scr->data_addr[pixel] = merging_alpha(
-				scr->palettes[scr->palette][i % 5], scr->data_addr[pixel], 0.3);
+				scr->palettes[scr->palette][i % 5], scr->data_addr[pixel], 0.1);
 }
 
 void		first_iter_buddha(t_iter *iter, int nbr_iter, int *i)
@@ -78,7 +78,7 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 	i = 0;
 	first_iter_buddha(iter, nbr_iter, &i);
 	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && 
-			i < scr->fractal->iteration && i > nbr_iter / 2)
+			i < scr->fractal->iteration && i < nbr_iter)
 	{
 		iter->x = iter->o_x;
 		iter->y = iter->o_y;

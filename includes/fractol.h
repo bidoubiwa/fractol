@@ -20,8 +20,8 @@
 # include "../minilibx_macos/mlx.h"
 # include "mlx_keys_macos.h"
 # include "X.h"
-# define WIDTH_SCREEN 2560
-# define HEIGHT_SCREEN 1440
+# define WIDTH_SCREEN 1550
+# define HEIGHT_SCREEN 750
 
 # define MOUSE_ZOOM_IN 5
 # define MOUSE_ZOOM_OUT 4
