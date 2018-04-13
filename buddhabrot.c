@@ -6,11 +6,27 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/19 17:28:58 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 20:15:13 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void		color_buddha(t_screen *scr, int pixel, int i)
+{
+	unsigned int	pal;
+
+	pal = scr->palettes[scr->palette][i % 5];
+	if (scr->palette == 4)
+	{
+		scr->data_addr[pixel] = merging_alpha(((i * (pal >> 16) % 255) << 16)
+				+ (((i * (pal >> 8)) % 255) << 8)
+				+ (i * (pal) % 255), scr->data_addr[pixel], 0.3);
+	}
+	else
+		scr->data_addr[pixel] = merging_alpha(
+				scr->palettes[scr->palette][i % 5], scr->data_addr[pixel], 0.3);
+}
 
 void		first_iter_buddha(t_iter *iter, int nbr_iter, int *i)
 {
@@ -30,10 +46,8 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 	int				i;
 	double			pixel_x;
 	double			pixel_y;
-//	double			pixel_tmp_x;
 	double			x_tmp;
 	int				pos;
-
 
 	pixel_x = 0;
 	pixel_y = 0;
@@ -44,20 +58,13 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 		if ((int)round(pixel_x) > scr->min_scr_x && (int)round(pixel_x) < scr->max_scr_x
 				&& (int)round(pixel_y) > scr->min_scr_y && (int)round(pixel_y) < scr->max_scr_y )
 		{
-			if (0x3366cc < scr->data_addr[pos] + 0x091225)
-				scr->data_addr[pos] = (0xffffff - scr->data_addr[pos] < 0x040301) ? 0xffffff : scr->data_addr[pos] + 0x040301;
-			else 
-				scr->data_addr[pos] = scr->data_addr[pos] + 0x091225;
-				
+			color_buddha(scr, pos, i);
 		}
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
 		pixel_x = 0 - (((iter->y - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x) + (scr->width * 0.5) + scr->min_scr_x;
 		pixel_y = (scr->height * 0.5) - ((0 - iter->x) - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
-		//pixel_tmp_x = pixel_x;
-		//pixel_x = 0 - pixel_y;
-		//pixel_y = pixel_tmp_x;
 		i++;
 	}
 }
@@ -70,7 +77,8 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 	iter->o_y = iter->y;
 	i = 0;
 	first_iter_buddha(iter, nbr_iter, &i);
-	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && i < scr->fractal->iteration && i > nbr_iter / 2)
+	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && 
+			i < scr->fractal->iteration && i > nbr_iter / 2)
 	{
 		iter->x = iter->o_x;
 		iter->y = iter->o_y;
@@ -92,12 +100,11 @@ void	*thread_buddha(void *arg)
 	while (y < scr->max_y)
 	{
 		x = scr->min_x;
-		real_y  = 0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) / 
-					(0.5 * scr->fractal->zoom * scr->height))) + scr->fractal->start_y;
+		real_y = scale_screen_y(scr, y);
 		while (x < scr->max_x)
 		{
 			iter.y = real_y;
-			iter.x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width)) + scr->fractal->start_x;
+			iter.x = scale_screen_x(scr, x);
 			if (iter.x >= -2 && iter.x <= 2 && iter.y <= 2 && iter.y >= -2)
 				iter_buddha(&iter, scr->fractal->iteration, scr);
 			x++;
@@ -117,15 +124,13 @@ int		buddhabrot(t_env *env)
 	screens = NULL;
 	nbr_screen = get_screen_by_fractal_name(env, 'b');
 	if (!(screens = init_args(screens, nbr_screen, env)))
-		return (0);	
+		safe_error_exit(env, "Malloc of threading screens failed");
 	i = 0;
 	while (i < 4)
 	{
-		if	(pthread_create(&thread[i], NULL, &thread_buddha, (void *)screens[i]) == -1)
-		{
-			perror("pthread_create");
-			return EXIT_FAILURE;
-		}
+		if	(pthread_create(&thread[i], NULL, &thread_buddha,
+					(void *)screens[i]) == -1)
+			safe_error_exit(env, "pthread create failed");
 		i++;
 	}
 	i = 0;

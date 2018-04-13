@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:38:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/10 17:34:27 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 19:50:50 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,34 @@ int			enable_zoom(t_env *env)
 	return (0);
 }
 
-int			change_palette(t_env *env, int keycode)
+int			set_anti_pixel(t_env *env)
 {
-	if (keycode == KEY_LEFT)
-	{
-		if (env->palette == 0)
-			env->palette = 4;
-		else
-			env->palette--;
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		if (env->palette == 4)
-			env->palette = 0;
-		else
-			env->palette++;
-	}
+	if (env->anti_pixel)
+		env->anti_pixel = 0;
+	else
+		env->anti_pixel = 1;
+	display_screen_one(env);
+	return (0);
+
+}
+
+int			change_palette(t_env *env)
+{
+	if (env->palette == 0)
+		env->palette = 4;
+	else
+		env->palette--;
 	clear_and_redraw(env);
 	return (0);
 }
 
 int			key_hook(int keycode, t_env *env)
 {
-
 	printf("key : %d\n", keycode);
 	if (keycode == KEY_ESCAPE)
-	{
-		mlx_destroy_image(env->mlx, env->img);
-		mlx_destroy_window(env->mlx, env->win);
-		exit(EXIT_SUCCESS);
-	}
+		safe_exit(env);
+	if (keycode == KEY_P)
+		set_anti_pixel(env);
 	if (keycode == KEY_I)
 		toggle_info_menu(env);
 	if (keycode == KEY_Z)
@@ -75,8 +73,7 @@ int			key_hook(int keycode, t_env *env)
 		set_julia_loop(env);
 	if (keycode == KEY_M)
 		set_menu(env);
-//	if (keycode == KEY_LEFT || keycode == KEY_RIGHT || keycode == KEY_LEFT || keycode == KEY_DOWN)
-	
-		//change_palette(env, keycode);
+	if (keycode == KEY_SPACEBAR)
+		change_palette(env);
 	return (0);
 }

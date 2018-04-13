@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:40:03 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 16:40:06 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 18:49:21 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void		fill_palettes(unsigned int ***palettes)
 	(*palettes)[0][2] = 0xcccccc;
 	(*palettes)[0][3] = 0xb3b3b3;
 	(*palettes)[0][4] = 0x999999;
-	(*palettes)[1][0] = 0x119DA4;
-	(*palettes)[1][1] = 0x14b5bd;
-	(*palettes)[1][2] = 0x119da4;
-	(*palettes)[1][3] = 0x0e858a;
-	(*palettes)[1][4] = 0x0c6c71;
+	(*palettes)[1][0] = 0x114B5F;
+	(*palettes)[1][1] = 0x456990;
+	(*palettes)[1][2] = 0xE4FDE1;
+	(*palettes)[1][3] = 0xF45B69;
+	(*palettes)[1][4] = 0x6B2737;
 	(*palettes)[2][0] = 0xffffff;
 	(*palettes)[2][1] = 0xC57B57;
 	(*palettes)[2][2] = 0xF1AB86;
@@ -34,11 +34,11 @@ void		fill_palettes(unsigned int ***palettes)
 	(*palettes)[3][2] = 0xD5CFE1;
 	(*palettes)[3][3] = 0xD4BEBE;
 	(*palettes)[3][4] = 0xB9FFB7;
-	(*palettes)[4][0] = 0xB9FFB7;
-	(*palettes)[4][1] = 0xABEDC6;
-	(*palettes)[4][2] = 0x98D9C2;
-	(*palettes)[4][3] = 0xF19A3E;
-	(*palettes)[4][4] = 0x2589BD;
+	(*palettes)[4][0] = 0x001010;
+	(*palettes)[4][1] = 0x001010;
+	(*palettes)[4][2] = 0x001010;
+	(*palettes)[4][3] = 0x001010;
+	(*palettes)[4][4] = 0x001010;
 }
 
 int			set_palettes(t_env *env)

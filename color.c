@@ -6,51 +6,11 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 17:52:30 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 16:36:11 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 19:11:01 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-
-unsigned int	palette(int iter)
-{
-	
-/*	if (iter % 5 == 0)
-		return (0xC5CFD6);
-	else if (iter % 5 == 1)
-		return (0x8B9296);
-	else if (iter % 5 == 2)
-		return (0x505457);
-	else if (iter % 5 == 3)
-		return (0x44484A);
-	else
-		return (0x2F3133);
-*/
-/*
-	if (iter % 5 == 0)
-		return (0xffffff);
-	else if (iter % 5 == 1)
-		return (0xe6e6e6);
-	else if (iter % 5 == 2)
-		return (0xcccccc);
-	else if (iter % 5 == 3)
-		return (0xb3b3b3);
-	else
-		return (0x999999);
-*/
-		if (iter % 5 == 0)
-		return (0xAEB4A9);
-	else if (iter % 5 == 1)
-		return (0xE0C1B3);
-	else if (iter % 5 == 2)
-		return (0xD89A9E);
-	else if (iter % 5 == 3)
-		return (0xC37D92);
-	else
-		return (0x846267);
-		
-}
 
 unsigned int rgb_to_hex(int r, int g, int b)
 {
@@ -59,6 +19,21 @@ unsigned int rgb_to_hex(int r, int g, int b)
 	hex = (r << 16) + (g << 8) + b;
 	return (hex);
 }
+
+
+unsigned int merging_alpha(unsigned int a, unsigned int o, double alpha)
+{
+	double			r;
+	double			g;
+	double			b;
+
+	r = (double)(a >> 16) / 255.0 * alpha + (double)(o >> 16) / 255.0 * (1.0 - alpha);
+	g = (double)((a >> 8) & 0xff) / 255.0 * alpha + (double)((o >> 8) & 0xff) / 255.0 * (1.0 - alpha);
+	b = (double)(a & 0xff) / 255 * alpha + (double)(o & 0xff) / 255 * (1.0 - alpha);
+	return (rgb_to_hex((int)round(r * 255),(int)round(g * 255),(int)round(b * 255)));
+	
+}
+
 
 unsigned int merge_two_colors(unsigned int color1, unsigned int color2)
 {
@@ -69,8 +44,6 @@ unsigned int merge_two_colors(unsigned int color1, unsigned int color2)
 	r = ((color1 >> 16) + (color2 >> 16)) / 2;
 	g = (((color1 >> 8) & 0xff) + ((color2 >> 8) & 0xff)) / 2;
 	b = ((color1 & 0xff) + (color2  & 0xff)) / 2;
-	if (r > 255 || b > 255 || b > 255)
-		printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 	return (rgb_to_hex(r, g, b));
 }
 

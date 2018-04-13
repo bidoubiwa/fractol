@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 14:33:52 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 16:38:00 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 12:23:01 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ int		iter_julia(t_iter *iter, int nbr_iter, t_screen *scr, int pixel)
 {
 	double	x_tmp;
 	int		i;
+	unsigned int pal;
 
 	i = 0;
 	while ( (iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
+		pal = scr->palettes[scr->palette][i % 5]; 
 		if (i > 0)
 		{
-			
-		//	scr->data_addr[pixel]  = (i <= 255) ? rgb_to_hex(i, i, i) : rgb_to_hex(255, 255 - (i - 255), 
-			//		255 - (i - 255)) ; 
-			//scr->data_addr[pixel]  = (scr->data_addr[pixel] + (0x020202 * i) > 0xffffff)  ; 
-			scr->data_addr[pixel] = scr->palettes[scr->palette][i % 5];
+			if (scr->palette == 4)
+				scr->data_addr[pixel] =	((i * (pal >> 16) % 255) << 16) +  (((i * (pal >> 8) ) % 255) << 8) + (i * (pal)  % 255) ;
+			else
+				scr->data_addr[pixel] = pal;
 		}
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;

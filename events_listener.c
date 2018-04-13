@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/01 19:11:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/10 17:36:01 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/11 18:13:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int			change_iterations(int keycode, t_env *env)
 			= env->screen[0]->fractal->iteration + 10;
 	if (keycode == KEY_UP || keycode == KEY_RIGHT || keycode == KEY_LEFT || keycode == KEY_DOWN)
 		move_keys(keycode, env);
-
 	display_screen_one(env);
 	return (0);
 }

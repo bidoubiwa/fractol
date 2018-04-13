@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:39:50 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/10 17:34:02 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/13 16:09:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int			mouse_hook(int button, int x, int y, t_env *env)
 {
 	int		zone;
 
-	if (x < 0 || y < 0)
+	printf("x : %d y : %d\n", x, y);
+	if (x <= 0 || y <= 0)
 		return (0);
 	zone = check_zone(x, y, env);
 	if (zone != 1)
