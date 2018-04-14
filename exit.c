@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 16:30:08 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 16:32:20 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:58:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ void			safe_error_exit(t_env *env, char *str)
 	mlx_destroy_window(env->mlx, env->win);
 	exit(EXIT_FAILURE);
 }
-

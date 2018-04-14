@@ -6,13 +6,13 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 16:59:57 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 18:32:27 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:02:45 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-t_screen	**create_screens(t_screen **screens)
+t_screen		**create_screens(t_screen **screens)
 {
 	int		i;
 
@@ -28,8 +28,7 @@ t_screen	**create_screens(t_screen **screens)
 	return (screens);
 }
 
-
-t_screen	**init_screens(t_screen **screen, char menu_on, char *param)
+t_screen		**init_screens(t_screen **screen, char menu_on, char *param)
 {
 	int		i;
 	int		p;
@@ -38,7 +37,7 @@ t_screen	**init_screens(t_screen **screen, char menu_on, char *param)
 	if (!(screen = create_screens(screen)))
 		return (NULL);
 	while (i < 4)
-	{	
+	{
 		p = get_order(param[0], i + 1);
 		screen[i]->min_x = get_x_min(i + 1);
 		screen[i]->max_x = get_x_max(i + 1, menu_on);

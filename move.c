@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 15:00:58 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/11 18:28:09 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:11:53 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int		move_keys(int button, t_env *env)
 	double		after_x;
 
 	scr = env->screen[0];
-	ratio = 1 / (scr->fractal->zoom + 20); 
-	ratio_x = scr->ratio_x * (0 - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width);
-	after_x = scr->ratio_x * (35 - scr->width / 2.0) / (0.5 * scr->fractal->zoom * scr->width);
-	ratio = ratio_x - after_x;	
-	tmp =  scr->fractal->start_y;
+	ratio = 1 / (scr->fractal->zoom + 20);
+	ratio_x = scale_screen_x(scr, 0);
+	after_x = scale_screen_x(scr, 35);
+	ratio = ratio_x - after_x;
+	tmp = scr->fractal->start_y;
 	if (button == KEY_LEFT)
 		scr->fractal->start_x = scr->fractal->start_x - ratio;
 	else if (button == KEY_RIGHT)

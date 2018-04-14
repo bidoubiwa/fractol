@@ -6,13 +6,13 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 12:09:03 by cvermand          #+#    #+#             */
-/*   Updated: 2018/03/15 16:09:43 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:14:04 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	get_screen_ratio(double width, double height, t_screen *screen)
+void		get_screen_ratio(double width, double height, t_screen *screen)
 {
 	if (width >= height)
 	{

@@ -6,27 +6,11 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/14 15:43:38 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 21:09:59 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-void		color_buddha(t_screen *scr, int pixel, int i)
-{
-	unsigned int	pal;
-
-	pal = scr->palettes[scr->palette][i % 5];
-	if (scr->palette == 4)
-	{
-		scr->data_addr[pixel] = merging_alpha(((i * (pal >> 16) % 255) << 16)
-				+ (((i * (pal >> 8)) % 255) << 8)
-				+ (i * (pal) % 255), scr->data_addr[pixel], 0.1);
-	}
-	else
-		scr->data_addr[pixel] = merging_alpha(
-				scr->palettes[scr->palette][i % 5], scr->data_addr[pixel], 0.1);
-}
 
 void		first_iter_buddha(t_iter *iter, int nbr_iter, int *i)
 {
@@ -36,7 +20,7 @@ void		first_iter_buddha(t_iter *iter, int nbr_iter, int *i)
 	{
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
-		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
+		iter->y = 2 * (x_tmp * iter->y) + iter->o_y;
 		*i = *i + 1;
 	}
 }
@@ -57,7 +41,7 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 			color_buddha(scr, get_pixel_index(pixel_x, pixel_y), i);
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
-		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
+		iter->y = 2 * (x_tmp * iter->y) + iter->o_y;
 		pixel_x = (int)round(0 - (((iter->y - scr->fractal->start_x) *
 						(0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x)
 				+ (scr->width * 0.5) + scr->min_scr_x);
@@ -66,15 +50,15 @@ void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 	}
 }
 
-int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
+int			iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 {
 	int		i;
-	
+
 	iter->o_x = iter->x;
 	iter->o_y = iter->y;
 	i = 0;
 	first_iter_buddha(iter, nbr_iter, &i);
-	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 && 
+	if (((iter->x * iter->x) + (iter->y * iter->y)) > 4 &&
 			i < scr->fractal->iteration && i < nbr_iter)
 	{
 		iter->x = iter->o_x;
@@ -84,7 +68,7 @@ int		iter_buddha(t_iter *iter, int nbr_iter, t_screen *scr)
 	return (0);
 }
 
-void	*thread_buddha(void *arg)
+void		*thread_buddha(void *arg)
 {
 	int			x;
 	int			y;
@@ -111,7 +95,7 @@ void	*thread_buddha(void *arg)
 	pthread_exit(NULL);
 }
 
-int		buddhabrot(t_env *env)
+int			buddhabrot(t_env *env)
 {
 	pthread_t	thread[4];
 	t_screen	**screens;
@@ -125,7 +109,7 @@ int		buddhabrot(t_env *env)
 	i = 0;
 	while (i < 4)
 	{
-		if	(pthread_create(&thread[i], NULL, &thread_buddha,
+		if (pthread_create(&thread[i], NULL, &thread_buddha,
 					(void *)screens[i]) == -1)
 			safe_error_exit(env, "pthread create failed");
 		i++;

@@ -6,25 +6,61 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 19:08:22 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/14 15:18:01 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 21:20:31 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-unsigned int merging_alpha_beta(unsigned int a, unsigned int o, double alpha, double beta)
+unsigned int	followup(int *i, int *close, int sy, t_env *env)
 {
-	double			r;
-	double			g;
-	double			b;
+	int				sx;
+	t_screen		*scr;
+	unsigned int	new;
+	unsigned int	base;
 
-	r = (double)(a >> 16) / 255.0 * alpha + ((double)(o >> 16) / 255.0) * (beta * (1.0 - alpha));
-	g = (double)((a >> 8) & 0xff) / 255.0 * alpha + ((double)((o >> 8) & 0xff) / 255.0) * (beta * (1.0 - alpha));
-	b = (double)(a & 0xff) / 255 * alpha + ((double)(o & 0xff) / 255) * (beta * (1.0 - alpha));
-	return (ft_rgb_to_hex((int)round(r * 255),(int)round(g * 255),(int)round(b * 255)));
+	base = env->data_addr[get_pixel_index(i[0], i[1])];
+	new = 0;
+	scr = env->screen[0];
+	sx = -1;
+	while (sx < 2)
+	{
+		if (is_in_true_screen(scr, i[0] + sx, i[1] + sy) &&
+				!(sx == 0 && sy == 0))
+		{
+			if (base == env->data_addr[get_pixel_index(sx + i[0], sy + i[1])])
+				*close = *close + 1;
+			new = merging(base, env->data_addr[get_pixel_index(sx + i[0],
+						sy + i[1])], 0.1, 1);
+		}
+		sx++;
+	}
+	return (new);
 }
 
-void		pixel_contour(int x, int y, t_screen *scr, t_env *env)
+void			pixel_cleanup(int x, int y, t_screen *scr, t_env *env)
+{
+	int				sy;
+	unsigned int	new;
+	int				close;
+	int				i[2];
+
+	(void)scr;
+	i[0] = x;
+	i[1] = y;
+	new = 0;
+	close = 0;
+	sy = -1;
+	while (sy < 2)
+	{
+		new = followup(i, &close, sy, env);
+		sy++;
+	}
+	if (close < 2)
+		env->data_addr[get_pixel_index(x, y)] = new;
+}
+
+void			pixel_contour(int x, int y, t_screen *scr, t_env *env)
 {
 	int				small_x;
 	int				small_y;
@@ -37,11 +73,13 @@ void		pixel_contour(int x, int y, t_screen *scr, t_env *env)
 		small_x = -1;
 		while (small_x < 2)
 		{
-			if (is_in_true_screen(scr, x + small_x, y + small_y) && (small_x != 0 && small_y != 0))
+			if (is_in_true_screen(scr, x + small_x, y + small_y) &&
+					!(small_x == 0 && small_y == 0))
 			{
-				env->data_addr[get_pixel_index(x + small_x, y + small_y)] = merging_alpha_beta(
-						env->data_addr[get_pixel_index(x, y)], 
-						env->data_addr[get_pixel_index(x + small_x, y + small_y)], 0.4, 1);
+				env->data_addr[get_pixel_index(x + small_x, y + small_y)] =
+					merging(env->data_addr[get_pixel_index(x, y)],
+							env->data_addr[get_pixel_index(x + small_x,
+								y + small_y)], 0.1, 1);
 			}
 			small_x++;
 		}
@@ -49,24 +87,31 @@ void		pixel_contour(int x, int y, t_screen *scr, t_env *env)
 	}
 }
 
-int					anti_pixelisation(t_env *env)
+void			loop_around(void (*f)(int, int, t_screen*, t_env*), t_env *env,
+		t_screen *scr)
 {
 	int			x;
 	int			y;
-	t_screen	*scr;
 
 	y = 0;
-	scr = env->screen[0];
 	while (y < scr->max_y)
 	{
 		x = 0;
 		while (x < scr->max_x)
 		{
-			pixel_contour(x, y, scr, env);
+			f(x, y, scr, env);
 			x++;
 		}
 		y++;
 	}
-	return (1);
 }
 
+int				anti_pixelisation(t_env *env)
+{
+	t_screen	*scr;
+
+	scr = env->screen[0];
+	loop_around(&pixel_cleanup, env, scr);
+	loop_around(&pixel_contour, env, scr);
+	return (1);
+}

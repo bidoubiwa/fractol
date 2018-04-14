@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:10:02 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 19:50:17 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:04:12 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void			display_screen_one(t_env *env)
 	if (env->show_info)
 		display_info_menu(env);
 }
-
 
 void			display_fractals(t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:39:50 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 16:09:06 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 21:07:31 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int			check_zone(int x, int y, t_env *env)
 	i = 0;
 	while (i < 4)
 	{
-		if (x > env->screen[i]->min_x && x <= env->screen[i]->max_x && y > env->screen[i]->min_y && y <= env->screen[i]->max_y)
-		return (env->screen[i]->order);
+		if (x > env->screen[i]->min_x && x <= env->screen[i]->max_x &&
+				y > env->screen[i]->min_y && y <= env->screen[i]->max_y)
+			return (env->screen[i]->order);
 		i++;
 	}
 	return (0);
@@ -39,10 +40,8 @@ int			julia_loop(int x, int y, t_env *env)
 		scr = env->screen[zone - 1];
 		if (zone == 1 && scr->fractal->name == 'j')
 		{
-			new_x = scr->ratio_x * (((x - scr->min_scr_x) - scr->width / 2.0) / 
-					(0.5 * scr->width)) + scr->fractal->start_x;
-			new_y = 0 - (scr->ratio_y * (((y - scr->min_scr_y) - scr->height / 2.0) /
-					(0.5 * scr->height))) + scr->fractal->start_y;
+			new_x = scale_screen_x(scr, x);
+			new_y = scale_screen_y(scr, y);
 			if (new_x >= -2 && new_x <= 2)
 				scr->fractal->const_x = new_x;
 			if (new_y >= -2 && new_x <= 2)
@@ -67,10 +66,10 @@ void		switch_screens(int button, int zone, t_env *env)
 	}
 }
 
-int		move_mouse(int button, int x, int y, t_env *env)
+int			move_mouse(int button, int x, int y, t_env *env)
 {
 	int		zone;
-	
+
 	zone = check_zone(x, y, env);
 	if (zone == 1 && env->zoom_enable == 1)
 		zoom(button, x, y, env);
@@ -81,7 +80,6 @@ int			mouse_hook(int button, int x, int y, t_env *env)
 {
 	int		zone;
 
-	printf("x : %d y : %d\n", x, y);
 	if (x <= 0 || y <= 0)
 		return (0);
 	zone = check_zone(x, y, env);
@@ -91,4 +89,3 @@ int			mouse_hook(int button, int x, int y, t_env *env)
 		zoom(button, x, y, env);
 	return (1);
 }
-

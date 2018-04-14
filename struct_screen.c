@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 18:29:55 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 19:35:44 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:16:02 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int			get_order(char p, int i)
 		return (2);
 	else if ((i == 1 && p == 'b') || (i == 3 && p != 'b'))
 		return (3);
-	else if ((i == 1 && p == 'a') ||( i == 4 && p != 'a'))
+	else if ((i == 1 && p == 'a') || (i == 4 && p != 'a'))
 		return (4);
-	else 	
+	else
 		return (1);
 }
 
-int		is_in_true_screen(t_screen *scr, int x, int y)
+int			is_in_true_screen(t_screen *scr, int x, int y)
 {
 	if (x > scr->min_x && x < scr->max_x
 				&& y > scr->min_y && y < scr->max_y)
@@ -49,7 +49,7 @@ int		is_in_true_screen(t_screen *scr, int x, int y)
 		return (0);
 }
 
-int		is_in_screen(t_screen *scr, int x, int y)
+int			is_in_screen(t_screen *scr, int x, int y)
 {
 	if (x > scr->min_scr_x && x < scr->max_scr_x
 				&& y > scr->min_scr_y && y < scr->max_scr_y)

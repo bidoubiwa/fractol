@@ -6,15 +6,14 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/08 08:28:21 by cvermand          #+#    #+#              #
-#    Updated: 2018/03/17 18:16:55 by cvermand         ###   ########.fr        #
+#    Updated: 2018/04/14 20:52:34 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 CC			=	gcc
-FLAGS		= 	-Wall -Werror -Wextra -g
-
+FLAGS		= 	-Wall -Werror -Wextra -g3
 _SRC 		= 	ft_handler.c ft_parser.c ft_int_handler.c ft_printf.c \
 	  			ft_chainfct.c ft_error_handler.c ft_flags.c ft_recognize.c \
 	  			ft_precision.c ft_width.c ft_str_handler.c ft_str_w_handler.c \

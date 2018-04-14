@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 16:38:10 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 19:50:50 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:35:42 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int			set_anti_pixel(t_env *env)
 		env->anti_pixel = 1;
 	display_screen_one(env);
 	return (0);
-
 }
 
 int			change_palette(t_env *env)
@@ -60,7 +59,6 @@ int			change_palette(t_env *env)
 
 int			key_hook(int keycode, t_env *env)
 {
-	printf("key : %d\n", keycode);
 	if (keycode == KEY_ESCAPE)
 		safe_exit(env);
 	if (keycode == KEY_P)

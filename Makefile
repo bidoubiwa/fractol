@@ -6,21 +6,21 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/04/13 19:15:41 by cvermand         ###   ########.fr        #
+#    Updated: 2018/04/14 21:29:46 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FRACTOL		=	fractol
 
 CC			=	gcc
-CFLAGS		=   -Wall -Wextra -Werror -g3
-
+CFLAGS		=   -Wall -Wextra -Werror
 _SRCS		=	main.c mandelbrot.c color.c events_listener.c julia.c \
-				color_menu.c buddhabrot.c antibuddhabrot.c \
+				buddhabrot.c antibuddhabrot.c \
 				struct_fractal.c screens_size.c thread_handling.c \
 				init_fractals.c init_screens.c keys.c mouse.c \
 				zoom.c clear.c info_menu.c palettes.c init_env.c\
-				move.c exit.c ratio.c struct_screen.c anti_pixelisation.c
+				move.c exit.c ratio.c struct_screen.c anti_pixelisation.c\
+				big_screen_ratio.c hsl_hsv.c
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 _HDR		=	fractol.h

@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_rgb_to_hex.c                                    :+:      :+:    :+:   */
+/*   big_screen_ratio.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/17 18:00:14 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/14 20:44:14 by cvermand         ###   ########.fr       */
+/*   Created: 2018/04/14 17:27:14 by cvermand          #+#    #+#             */
+/*   Updated: 2018/04/14 17:39:24 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-unsigned int	ft_rgb_to_hex(int r, int g, int b)
+double		scale_big_screen_y(t_screen *scr, int y)
 {
-	unsigned int hex;
+	double real_y;
 
-	hex = (r << 16) + (g << 8) + b;
-	return (hex);
+	real_y = 0 - (scr->ratio_y * ((y - scr->height / 2.0)
+				/ (0.5 * scr->fractal->zoom * scr->height)));
+	return (real_y);
+}
+
+double		scale_big_screen_x(t_screen *scr, int x)
+{
+	double real_x;
+
+	real_x = scr->ratio_x * ((x - scr->width / 2.0) /
+			(0.5 * scr->fractal->zoom * scr->width));
+	return (real_x);
 }

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 15:35:54 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/09 16:40:11 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:15:06 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ t_screen		*get_screen_ptr_by_fractal_name(t_env *env, char c)
 	return (env->screen[0]);
 }
 
-
-int			get_screen_by_fractal_name(t_env *env, char c)
+int				get_screen_by_fractal_name(t_env *env, char c)
 {
 	int			i;
 
@@ -41,7 +40,7 @@ int			get_screen_by_fractal_name(t_env *env, char c)
 	return (i);
 }
 
-void		free_fractal(t_screen	**screens)
+void			free_fractal(t_screen **screens)
 {
 	int			i;
 	t_fractal	*fractal;
@@ -63,7 +62,7 @@ t_fractal		*get_fractal(int order)
 	if (!(fractal = ft_memalloc(sizeof(t_fractal))))
 		return (NULL);
 	fractal->start_x = 0;
-	fractal->start_y = 0;	
+	fractal->start_y = 0;
 	if (order == 1)
 		init_mandelbrot(fractal);
 	else if (order == 2)
