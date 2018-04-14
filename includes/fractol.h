@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:11:27 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 19:47:57 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:34:31 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,8 @@ double				scale_screen_y(t_screen *scr, int y);
 double				scale_screen_x(t_screen *scr, int x);
 int					get_pixel_index(int pixel_x, int pixel_y);
 void				get_screen_ratio(double width, double height, t_screen *screen);
-int					reverse_scale_screen_x(t_screen *scr, t_iter *iter);
-int					reverse_scale_screen_y(t_screen *scr, t_iter *iter);
+int					reverse_scale_screen_x(t_screen *scr, double iter);
+int					reverse_scale_screen_y(t_screen *scr, double iter);
 /*
 **	EXIT
 */

@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 17:08:01 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 17:41:16 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:34:16 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ double		scale_screen_x(t_screen *scr, int x)
 	return (real_x);
 }
 
-int			reverse_scale_screen_x(t_screen *scr, t_iter *iter)
+int			reverse_scale_screen_x(t_screen *scr, double iter)
 {
 	double pixel_x;
 
-  	pixel_x = (((iter->x - scr->fractal->start_x) *
+  	pixel_x = (((iter - scr->fractal->start_x) *
 				(0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x)
 				+ (scr->width * 0.5) + scr->min_scr_x;
 	return ((int)round(pixel_x));
 }
 
-int			reverse_scale_screen_y(t_screen *scr, t_iter *iter)
+int			reverse_scale_screen_y(t_screen *scr, double iter)
 {
 	double pixel_y;
 
-  	pixel_y = (scr->height * 0.5) - (iter->y - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
+  	pixel_y = (scr->height * 0.5) - (iter - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
 	return ((int)round(pixel_y));
 }
 

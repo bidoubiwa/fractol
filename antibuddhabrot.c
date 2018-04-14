@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 18:39:02 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:34:41 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int			iter_anti(t_iter *iter, int nbr_iter, t_screen *scr)
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y;
-		pixel_x = reverse_scale_screen_x(scr, iter);
-		pixel_y = reverse_scale_screen_y(scr, iter);
+		pixel_x = reverse_scale_screen_x(scr, iter->x);
+		pixel_y = reverse_scale_screen_y(scr, iter->y);
 		i++;
 	}
 	return (0);

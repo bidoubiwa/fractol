@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/13 19:08:22 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 20:08:47 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:18:01 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void		pixel_contour(int x, int y, t_screen *scr, t_env *env)
 		small_x = -1;
 		while (small_x < 2)
 		{
-			if (is_in_true_screen(scr, x + small_x, y + small_y))
+			if (is_in_true_screen(scr, x + small_x, y + small_y) && (small_x != 0 && small_y != 0))
 			{
-				env->data_addr[get_pixel_index(x, y)] = merging_alpha_beta(
+				env->data_addr[get_pixel_index(x + small_x, y + small_y)] = merging_alpha_beta(
 						env->data_addr[get_pixel_index(x, y)], 
-						env->data_addr[get_pixel_index(x + small_x, y + small_y)], 0.9, 0.1);
+						env->data_addr[get_pixel_index(x + small_x, y + small_y)], 0.4, 1);
 			}
 			small_x++;
 		}

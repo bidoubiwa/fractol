@@ -6,7 +6,7 @@
 /*   By: cvermand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 14:30:09 by cvermand          #+#    #+#             */
-/*   Updated: 2018/04/13 20:15:13 by cvermand         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:43:38 by cvermand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,24 @@ void		first_iter_buddha(t_iter *iter, int nbr_iter, int *i)
 void		correct_path_iter(t_iter *iter, int nbr_iter, t_screen *scr)
 {
 	int				i;
-	double			pixel_x;
-	double			pixel_y;
+	int				pixel_x;
+	int				pixel_y;
 	double			x_tmp;
-	int				pos;
 
 	pixel_x = 0;
 	pixel_y = 0;
 	i = 0;
 	while ((iter->x * iter->x) + (iter->y * iter->y) <= 4 && i <= nbr_iter)
 	{
-		pos = ((int)round(pixel_y) * WIDTH_SCREEN) + (int)round(pixel_x);
-		if ((int)round(pixel_x) > scr->min_scr_x && (int)round(pixel_x) < scr->max_scr_x
-				&& (int)round(pixel_y) > scr->min_scr_y && (int)round(pixel_y) < scr->max_scr_y )
-		{
-			color_buddha(scr, pos, i);
-		}
+		if (is_in_screen(scr, pixel_x, pixel_y))
+			color_buddha(scr, get_pixel_index(pixel_x, pixel_y), i);
 		x_tmp = iter->x;
 		iter->x = (x_tmp * x_tmp) - (iter->y * iter->y) + iter->o_x;
 		iter->y = 2 * (x_tmp * iter->y) + iter->o_y; 
-		pixel_x = 0 - (((iter->y - scr->fractal->start_x) * (0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x) + (scr->width * 0.5) + scr->min_scr_x;
-		pixel_y = (scr->height * 0.5) - ((0 - iter->x) - scr->fractal->start_y) * ((0.5 * scr->fractal->zoom * scr->height) / scr->ratio_y) + scr->min_scr_y;
+		pixel_x = (int)round(0 - (((iter->y - scr->fractal->start_x) *
+						(0.5 * scr->width * scr->fractal->zoom)) / scr->ratio_x)
+				+ (scr->width * 0.5) + scr->min_scr_x);
+		pixel_y = reverse_scale_screen_y(scr, 0 - iter->x);
 		i++;
 	}
 }
