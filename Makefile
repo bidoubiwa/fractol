@@ -6,7 +6,7 @@
 #    By: cvermand <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/09 14:19:53 by cvermand          #+#    #+#              #
-#    Updated: 2018/04/14 21:29:46 by cvermand         ###   ########.fr        #
+#    Updated: 2018/04/16 15:12:03 by cvermand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ _SRCS		=	main.c mandelbrot.c color.c events_listener.c julia.c \
 _LIBFT		=	libft.a
 _MLX		= 	libmlx.a
 _HDR		=	fractol.h
-SRCS_DIR	=	.
+SRCS_DIR	=	src
 LIB_DIR		=	libft
 MLX_DIR		=	minilibx_macos
 HDR_DIR		=	includes
